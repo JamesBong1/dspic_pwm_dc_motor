@@ -81,7 +81,11 @@ int16_t main(void)
     PWM1CON1bits.PEN2L = 1;
     PWM1CON1bits.PEN3H = 1;
     PWM1CON1bits.PEN3L = 1;
-    P1TCONbits.PTEN=1; 
+    
+    //DTCON1bits.DTA = 59;
+    
+    P1TCONbits.PTEN=1;
+    
     while(1)
     {
         Nop();

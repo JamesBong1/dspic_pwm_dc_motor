@@ -86,9 +86,9 @@ xc16-ld 1.36 (B)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200               0x3cc           0x5b2  (1458)
-.text                        0x5cc               0x192           0x25b  (603)
+.text                        0x5cc               0x1ec           0x2e2  (738)
 
-                 Total "program" memory used (bytes):          0x80d  (2061) 1%
+                 Total "program" memory used (bytes):          0x894  (2196) 1%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -129,9 +129,9 @@ External Symbols in Program Memory (by address):
                   0x00030a                  ___subsf3
                   0x00030c                  ___addsf3
                   0x0003c6                  ___divsf3
-                  0x00044a                  ___eqsf2
                   0x00044a                  ___lesf2
                   0x00044a                  ___ltsf2
+                  0x00044a                  ___eqsf2
                   0x00044e                  ___gtsf2
                   0x00044e                  ___gesf2
                   0x000452                  ___fixunssfsi
@@ -143,16 +143,17 @@ External Symbols in Program Memory (by address):
                   0x000528                  __fbopReturnNaN
                   0x00052e                  ___mulsf3
                   0x000596                  __fcompare
-                  0x0005cc                  _initialized_pwm_module
-                  0x00060e                  _set_pwm_duty_cycle
-                  0x0006b6                  _InitApp
-                  0x0006f8                  _ConfigureOscillator
-                  0x00073a                  _main
+                  0x0005cc                  _set_pwm_period
+                  0x000618                  _initialized_pwm_module
+                  0x000654                  _set_pwm_duty_cycle
+                  0x000728                  _InitApp
+                  0x000752                  _ConfigureOscillator
+                  0x000794                  _main
 
 External Symbols in Program Memory (by name):
 
-                  0x0006f8                  _ConfigureOscillator
-                  0x0006b6                  _InitApp
+                  0x000752                  _ConfigureOscillator
+                  0x000728                  _InitApp
                   0x0002ce                  __AddressError
                   0x0002ec                  __AltAddressError
                   0x0002fe                  __AltDMACError
@@ -185,9 +186,10 @@ External Symbols in Program Memory (by name):
                   0x0004fe                  __funpack2
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
-                  0x0005cc                  _initialized_pwm_module
-                  0x00073a                  _main
-                  0x00060e                  _set_pwm_duty_cycle
+                  0x000618                  _initialized_pwm_module
+                  0x000794                  _main
+                  0x000654                  _set_pwm_duty_cycle
+                  0x0005cc                  _set_pwm_period
 
 Memory Configuration
 
@@ -362,47 +364,47 @@ __FUID3
 .comment
  *(.comment)
 
-.debug_info       0x000000       0x1695
+.debug_info       0x000000       0x1715
  *(.debug_info)
  .debug_info      0x000000        0x147 build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  .debug_info      0x000147        0x13f build/XC16_dsPIC33FJ128MC804/production/interrupts.o
  .debug_info      0x000286        0x3ff build/XC16_dsPIC33FJ128MC804/production/main.o
  .debug_info      0x000685        0x34a build/XC16_dsPIC33FJ128MC804/production/system.o
  .debug_info      0x0009cf        0x41f build/XC16_dsPIC33FJ128MC804/production/traps.o
- .debug_info      0x000dee        0x8a7 build/XC16_dsPIC33FJ128MC804/production/user.o
+ .debug_info      0x000dee        0x927 build/XC16_dsPIC33FJ128MC804/production/user.o
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev     0x000000        0x33d
+.debug_abbrev     0x000000        0x364
  *(.debug_abbrev)
  .debug_abbrev    0x000000         0x1f build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  .debug_abbrev    0x00001f         0x1f build/XC16_dsPIC33FJ128MC804/production/interrupts.o
  .debug_abbrev    0x00003e         0xb6 build/XC16_dsPIC33FJ128MC804/production/main.o
  .debug_abbrev    0x0000f4         0xc5 build/XC16_dsPIC33FJ128MC804/production/system.o
  .debug_abbrev    0x0001b9         0x8a build/XC16_dsPIC33FJ128MC804/production/traps.o
- .debug_abbrev    0x000243         0xfa build/XC16_dsPIC33FJ128MC804/production/user.o
+ .debug_abbrev    0x000243        0x121 build/XC16_dsPIC33FJ128MC804/production/user.o
 
-.debug_line       0x000000        0x44c
+.debug_line       0x000000        0x453
  *(.debug_line)
  .debug_line      0x000000         0x1a build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  .debug_line      0x00001a         0x1a build/XC16_dsPIC33FJ128MC804/production/interrupts.o
  .debug_line      0x000034         0xfa build/XC16_dsPIC33FJ128MC804/production/main.o
  .debug_line      0x00012e         0xf3 build/XC16_dsPIC33FJ128MC804/production/system.o
  .debug_line      0x000221        0x10d build/XC16_dsPIC33FJ128MC804/production/traps.o
- .debug_line      0x00032e        0x11e build/XC16_dsPIC33FJ128MC804/production/user.o
+ .debug_line      0x00032e        0x125 build/XC16_dsPIC33FJ128MC804/production/user.o
 
-.debug_frame      0x000000        0x216
+.debug_frame      0x000000        0x232
  *(.debug_frame)
  .debug_frame     0x000000         0x30 build/XC16_dsPIC33FJ128MC804/production/main.o
  .debug_frame     0x000030         0x30 build/XC16_dsPIC33FJ128MC804/production/system.o
  .debug_frame     0x000060        0x148 build/XC16_dsPIC33FJ128MC804/production/traps.o
- .debug_frame     0x0001a8         0x6e build/XC16_dsPIC33FJ128MC804/production/user.o
+ .debug_frame     0x0001a8         0x8a build/XC16_dsPIC33FJ128MC804/production/user.o
 
-.debug_str        0x000000         0x73
+.debug_str        0x000000         0x72
  *(.debug_str)
  .debug_str       0x000000         0x18 build/XC16_dsPIC33FJ128MC804/production/main.o
  .debug_str       0x000018          0xb build/XC16_dsPIC33FJ128MC804/production/system.o
  .debug_str       0x000023          0xc build/XC16_dsPIC33FJ128MC804/production/traps.o
- .debug_str       0x00002f         0x44 build/XC16_dsPIC33FJ128MC804/production/user.o
+ .debug_str       0x00002f         0x43 build/XC16_dsPIC33FJ128MC804/production/user.o
 
 .debug_loc
  *(.debug_loc)
@@ -411,7 +413,7 @@ __FUID3
  *(.debug_macinfo)
 
 .debug_pubnames
-                  0x000000        0x174
+                  0x000000        0x187
  *(.debug_pubnames)
  .debug_pubnames
                   0x000000         0x1b build/XC16_dsPIC33FJ128MC804/production/main.o
@@ -420,7 +422,7 @@ __FUID3
  .debug_pubnames
                   0x000045         0xdf build/XC16_dsPIC33FJ128MC804/production/traps.o
  .debug_pubnames
-                  0x000124         0x50 build/XC16_dsPIC33FJ128MC804/production/user.o
+                  0x000124         0x63 build/XC16_dsPIC33FJ128MC804/production/user.o
 
 .debug_ranges
  *(.debug_ranges)
@@ -1550,7 +1552,7 @@ END GROUP
 OUTPUT(dist/XC16_dsPIC33FJ128MC804/production/dspic33_pwm_test.X.production.elf elf32-pic30)
 
 .debug_pubtypes
-                  0x000060        0x200
+                  0x000060        0x1f6
  .debug_pubtypes
                   0x000060         0x12 build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  .debug_pubtypes
@@ -1562,48 +1564,48 @@ OUTPUT(dist/XC16_dsPIC33FJ128MC804/production/dspic33_pwm_test.X.production.elf 
  .debug_pubtypes
                   0x000135         0x42 build/XC16_dsPIC33FJ128MC804/production/traps.o
  .debug_pubtypes
-                  0x000177         0xe9 build/XC16_dsPIC33FJ128MC804/production/user.o
+                  0x000177         0xdf build/XC16_dsPIC33FJ128MC804/production/user.o
 
 __c30_signature
-                  0x000260         0x72
+                  0x000256         0x72
  __c30_signature
-                  0x000260          0x6 build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
+                  0x000256          0x6 build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  __c30_signature
-                  0x000266          0x6 build/XC16_dsPIC33FJ128MC804/production/interrupts.o
+                  0x00025c          0x6 build/XC16_dsPIC33FJ128MC804/production/interrupts.o
  __c30_signature
-                  0x00026c          0x6 build/XC16_dsPIC33FJ128MC804/production/main.o
+                  0x000262          0x6 build/XC16_dsPIC33FJ128MC804/production/main.o
  __c30_signature
-                  0x000272          0x6 build/XC16_dsPIC33FJ128MC804/production/system.o
+                  0x000268          0x6 build/XC16_dsPIC33FJ128MC804/production/system.o
  __c30_signature
-                  0x000278          0x6 build/XC16_dsPIC33FJ128MC804/production/traps.o
+                  0x00026e          0x6 build/XC16_dsPIC33FJ128MC804/production/traps.o
  __c30_signature
-                  0x00027e          0x6 build/XC16_dsPIC33FJ128MC804/production/user.o
+                  0x000274          0x6 build/XC16_dsPIC33FJ128MC804/production/user.o
  __c30_signature
-                  0x000284          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
+                  0x00027a          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(crt0_standard.o)
  __c30_signature
-                  0x00028a          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
+                  0x000280          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(data_init_standard.o)
  __c30_signature
-                  0x000290          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(addsf3.eo)
+                  0x000286          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(addsf3.eo)
  __c30_signature
-                  0x000296          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(divsf3.eo)
+                  0x00028c          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(divsf3.eo)
  __c30_signature
-                  0x00029c          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(feqltle.eo)
+                  0x000292          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(feqltle.eo)
  __c30_signature
-                  0x0002a2          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fgtge.eo)
+                  0x000298          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fgtge.eo)
  __c30_signature
-                  0x0002a8          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
+                  0x00029e          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fixunssfsi.eo)
  __c30_signature
-                  0x0002ae          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fpack.eo)
+                  0x0002a4          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fpack.eo)
  __c30_signature
-                  0x0002b4          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(funpack.eo)
+                  0x0002aa          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(funpack.eo)
  __c30_signature
-                  0x0002ba          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(funpack2.eo)
+                  0x0002b0          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(funpack2.eo)
  __c30_signature
-                  0x0002c0          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(futil.eo)
+                  0x0002b6          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(futil.eo)
  __c30_signature
-                  0x0002c6          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
+                  0x0002bc          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(mulsf3.eo)
  __c30_signature
-                  0x0002cc          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fcompare.eo)
+                  0x0002c2          0x6 c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\libm-elf.a(fcompare.eo)
 
 .config_JTAGEN    0xf8000e          0x2
  .config_JTAGEN
@@ -1669,12 +1671,13 @@ __c30_signature
  .aivt._AltDMACError
                   0x00010e          0x2 build/XC16_dsPIC33FJ128MC804/production/traps.o
 
-.text             0x0005cc        0x192
- .text            0x0005cc        0x12c build/XC16_dsPIC33FJ128MC804/production/user.o
-                  0x0005cc                  _initialized_pwm_module
-                  0x00060e                  _set_pwm_duty_cycle
-                  0x0006b6                  _InitApp
- .text            0x0006f8         0x42 build/XC16_dsPIC33FJ128MC804/production/system.o
-                  0x0006f8                  _ConfigureOscillator
- .text            0x00073a         0x24 build/XC16_dsPIC33FJ128MC804/production/main.o
-                  0x00073a                  _main
+.text             0x0005cc        0x1ec
+ .text            0x0005cc        0x186 build/XC16_dsPIC33FJ128MC804/production/user.o
+                  0x0005cc                  _set_pwm_period
+                  0x000618                  _initialized_pwm_module
+                  0x000654                  _set_pwm_duty_cycle
+                  0x000728                  _InitApp
+ .text            0x000752         0x42 build/XC16_dsPIC33FJ128MC804/production/system.o
+                  0x000752                  _ConfigureOscillator
+ .text            0x000794         0x24 build/XC16_dsPIC33FJ128MC804/production/main.o
+                  0x000794                  _main
