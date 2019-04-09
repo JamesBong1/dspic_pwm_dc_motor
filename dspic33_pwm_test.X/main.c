@@ -16,27 +16,12 @@
 
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
-
+#include <stdio.h>
 #include "system.h"        /* System funct/params, like osc/peripheral config */
-#include "user.h"          /* User funct/params, such as InitApp              */
-
-//Start with FRC and allow clock switching
-//Oscillator Mode: FNOSC_FRC            Internal Fast RC (FRC)
-//_FOSCSEL(FNOSC_FRC);									//!<Select Oscillator
-
-//Clock Switching and Monitor:          FCKSM_CSECMD         Clock switching is enabled, Fail-Safe Clock Monitor is disabled
-//OSC2 Pin Function:                    OSCIOFNC_OFF         OSC2 pin has clock out function
-//Primary Oscillator Source:            POSCMD_XT            XT Oscillator Mode
-//Peripheral Pin Select Configuration:  IOL1WAY_OFF          Allow Multiple Re-configurations
-//_FOSC(FCKSM_CSECMD & OSCIOFNC_OFF & POSCMD_XT & IOL1WAY_OFF);			//!<Configure Oscillator
-
-//Watchdog Timer Enable:    FWDTEN_OFF           Watchdog timer enabled/disabled by user software
-//_FWDT(FWDTEN_OFF);										//!<Turn Watchdog Timer off
-
-//Comm Channel Select:  ICS_PGD3             Communicate on PGC3/EMUC3 and PGD3/EMUD3
-//JTAG Port Enable:     JTAGEN_OFF           JTAG is Disabled
-//_FICD(ICS_PGD3 & JTAGEN_OFF);							//!<Select Communication Channel 3 and Disable JTAG
-
+#include <libpic30.h>
+#include "user.h"
+#include "project.h"
+#include "ring_buffer.h"          /* User funct/params, such as InitApp              */
 
 //update config bits to stop triggering the XC compiler warnings according
 //to the doc, for this chip; file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.36/docs/config_docs/33FJ128MC804.html
@@ -54,7 +39,7 @@
 
 
 
-
+void command_handler( _ring_buffer *rx );
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
@@ -67,27 +52,39 @@
 
 int16_t main(void)
 {
-
+    __C30_UART =1;
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
     /* Initialize IO ports and peripherals */
     InitApp();
     
+    
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-    PWM1CON1bits.PEN1H = 1;
-    PWM1CON1bits.PEN1L = 1;
-    PWM1CON1bits.PEN2H = 1;
-    PWM1CON1bits.PEN2L = 1;
-    PWM1CON1bits.PEN3H = 1;
-    PWM1CON1bits.PEN3L = 1;
+//    PWM1CON1bits.PEN1H = 1;
+//    PWM1CON1bits.PEN1L = 1;
+//    PWM1CON1bits.PEN2H = 1;
+//    PWM1CON1bits.PEN2L = 1;
+//    PWM1CON1bits.PEN3H = 1;
+//    PWM1CON1bits.PEN3L = 1;
     
     //DTCON1bits.DTA = 59;
+    EnableUSBUARTTransmit;
+    __delay_ms(500);
     
-    P1TCONbits.PTEN=1;
-    
+    printf( "\n\rMMC-200 dc motor controller test version %s", _Version );
+    __delay_ms(100);
+    //P1TCONbits.PTEN=1;
+
+    EnableUSBUARTReceive;
+    __delay_ms(100);
+    //Turn on UART RX interrupt after board addressing is completed
+	IFS0bits.U1RXIF = 0;
+	IEC0bits.U1RXIE = 1;
     while(1)
     {
+        //printf( "\n\rtesting." );
+        //__delay_ms(1000);
         Nop();
         Nop();
         Nop();
@@ -95,5 +92,28 @@ int16_t main(void)
         Nop();
         Nop();
         Nop();
+        command_handler( &uart_rx );
     }
+}
+
+
+void command_handler( _ring_buffer *rx )
+{
+    uint8_t i;
+    
+    if( rxbuffer_peak( rx ) != '\r' )
+        return;
+    
+    EnableUSBUARTTransmit;
+    __delay_ms(1);
+    
+    printf( "\n\rreceived: " );
+	for( i = 0; i < rx->head; i++ )
+		printf( "%c", rx->rx[i] );//printf( "%s%x", ( rx->rx[i]<0x0f)?"0x0":"0x", rx->rx[i] );
+    printf( "\n\r" );
+    
+    rxbuffer_purge( rx );
+
+    EnableUSBUARTReceive
+    __delay_ms(1);
 }

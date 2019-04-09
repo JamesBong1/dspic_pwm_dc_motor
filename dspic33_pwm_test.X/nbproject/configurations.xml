@@ -4,10 +4,13 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>system.h</itemPath>
-      <itemPath>user.h</itemPath>
-      <itemPath>project.h</itemPath>
-      <itemPath>pwm.h</itemPath>
+      <itemPath>h/project.h</itemPath>
+      <itemPath>h/pwm.h</itemPath>
+      <itemPath>h/system.h</itemPath>
+      <itemPath>h/uart.h</itemPath>
+      <itemPath>h/user.h</itemPath>
+      <itemPath>h/cli.h</itemPath>
+      <itemPath>h/ring_buffer.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -22,6 +25,10 @@
       <itemPath>system.c</itemPath>
       <itemPath>traps.c</itemPath>
       <itemPath>user.c</itemPath>
+      <itemPath>pwm.c</itemPath>
+      <itemPath>uart.c</itemPath>
+      <itemPath>cli.c</itemPath>
+      <itemPath>h/ring_buffer.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -32,6 +39,9 @@
     <itemPath>legal_disclaimer.txt</itemPath>
     <itemPath>project_information.txt</itemPath>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>h</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="C30_dsPIC33FJ256GP710A" type="2">
@@ -782,7 +792,7 @@
         <property key="warn-section-align" value="false"/>
       </C30-LD>
       <C30Global>
-        <property key="common-include-directories" value=""/>
+        <property key="common-include-directories" value="h"/>
         <property key="dual-boot-partition" value="0"/>
         <property key="fast-math" value="false"/>
         <property key="generic-16-bit" value="false"/>

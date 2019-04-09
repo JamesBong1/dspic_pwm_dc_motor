@@ -28,38 +28,16 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef XC_HEADER_TEMPLATE_H
-#define	XC_HEADER_TEMPLATE_H
+#ifndef PR0JECT_H
+#define	PR0JECT_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-// TODO Insert appropriate #include <>
+#define _Version "v19.4.9.0"
 
-// TODO Insert C++ class definitions if appropriate
+#define _Enable     1
+#define _Disable    0
 
-// TODO Insert declarations
-
-// Comment a function and leverage automatic documentation with slash star star
-/**
-    <p><b>Function prototype:</b></p>
-  
-    <p><b>Summary:</b></p>
-
-    <p><b>Description:</b></p>
-
-    <p><b>Precondition:</b></p>
-
-    <p><b>Parameters:</b></p>
-
-    <p><b>Returns:</b></p>
-
-    <p><b>Example:</b></p>
-    <code>
- 
-    </code>
-
-    <p><b>Remarks:</b></p>
- */
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation
 
@@ -74,5 +52,5 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif	/* XC_HEADER_TEMPLATE_H */
+#endif	/* PR0JECT_H */
 

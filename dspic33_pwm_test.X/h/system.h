@@ -6,8 +6,10 @@
 
 /* Microcontroller MIPs (FCY) */
 #define SYS_FREQ        7370000L
-#define FCY             50000000 //SYS_FREQ/2
+#define FCY             50000000UL //SYS_FREQ/2
 
+#define EnableUSBUARTReceive    LATAbits.LATA10 = 0;
+#define EnableUSBUARTTransmit   LATAbits.LATA10 = 1;
 /******************************************************************************/
 /* System Function Prototypes                                                 */
 /******************************************************************************/
