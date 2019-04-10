@@ -33,6 +33,7 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <stdbool.h>
+#include "ring_buffer.h"
 
 typedef struct _CLICommandShell
 {
@@ -41,6 +42,11 @@ typedef struct _CLICommandShell
 	bool        (*entry)( char *rx_buf ); 
 }_cli_shell;
 
+extern _cli_shell cli_commands[];
+
+int parse_raw_data( _ring_buffer * raw );
+
+bool execute_command( _ring_buffer * cmd , _cli_shell *command_lut );
 
 #ifdef	__cplusplus
 extern "C" {

@@ -33,7 +33,7 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-#define _Version "v19.4.9.0"
+#define _Version "v19.4.9.1"
 
 #define _Enable     1
 #define _Disable    0

@@ -19,7 +19,7 @@
 #include "user.h"            /* variables/params used by user.c               */
 
 //had to add 'extern' prototypes to avoid the implicit declaration error. mplab gcc bug???
-
+_stage_settings stage;
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 //!Map Peripheral Inputs and Outputs to Pins
@@ -69,5 +69,10 @@ void InitApp(void)
     initialize_pwm();
     
     /* Setup analog functionality and port direction */
-
+    
+    //set stage defaults
+    stage.accel     = 100000;	//setting	um/s/s
+    stage.position  = 0;        //???
+    stage.velocity  = 0.10;     //set low velocity by default???
+    
 }

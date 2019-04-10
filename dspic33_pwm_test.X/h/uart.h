@@ -31,11 +31,14 @@
 #ifndef UART_H
 #define	UART_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include <xc.h> // include processor files - each processor file is guarded.
+#include <stdbool.h>
 #include "system.h"
 
 #define DefaultBaudrate 38400							//!<Baud Rate we are running
 #define BRGVAL          ((FCY/DefaultBaudrate)/16)-1			//!<BRG register calculation
+
+extern bool command_received;
 
 int UART1_Puts(const char *);
 

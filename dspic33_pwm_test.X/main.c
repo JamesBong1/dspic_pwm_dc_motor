@@ -21,7 +21,9 @@
 #include <libpic30.h>
 #include "user.h"
 #include "project.h"
-#include "ring_buffer.h"          /* User funct/params, such as InitApp              */
+#include "ring_buffer.h"
+#include "uart.h"          /* User funct/params, such as InitApp              */
+#include "cli.h"
 
 //update config bits to stop triggering the XC compiler warnings according
 //to the doc, for this chip; file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.36/docs/config_docs/33FJ128MC804.html
@@ -72,7 +74,7 @@ int16_t main(void)
     EnableUSBUARTTransmit;
     __delay_ms(500);
     
-    printf( "\n\rMMC-200 dc motor controller test version %s", _Version );
+    printf( "\n\rMMC-200 dc motor controller test version %s\n\r", _Version );
     __delay_ms(100);
     //P1TCONbits.PTEN=1;
 
@@ -98,20 +100,25 @@ int16_t main(void)
 
 
 void command_handler( _ring_buffer *rx )
-{
-    uint8_t i;
-    
-    if( rxbuffer_peak( rx ) != '\r' )
+{    
+
+    if( !command_received )
         return;
-    
     EnableUSBUARTTransmit;
     __delay_ms(1);
     
-    printf( "\n\rreceived: " );
-	for( i = 0; i < rx->head; i++ )
-		printf( "%c", rx->rx[i] );//printf( "%s%x", ( rx->rx[i]<0x0f)?"0x0":"0x", rx->rx[i] );
-    printf( "\n\r" );
+
+//    printf( "\n\rreceived: " );
+//	for( i = 0; i < rx->head; i++ )
+//		printf( "%c", rx->rx[i] );//printf( "%s%x", ( rx->rx[i]<0x0f)?"0x0":"0x", rx->rx[i] );
+//    printf( "\n\r" );
+
+        if( !execute_command( rx, cli_commands ) )
+            printf( "\n\rinvalid command!\n\r" );
     
+    
+    command_received = false;
+    //if( rxbuffer_full(rx) )
     rxbuffer_purge( rx );
 
     EnableUSBUARTReceive
