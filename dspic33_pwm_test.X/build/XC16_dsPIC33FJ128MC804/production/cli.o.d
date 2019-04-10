@@ -4,4 +4,9 @@ h/cli.h  \
  h/ring_buffer.h  \
 h/user.h  \
 h/project.h  \
-h/ring_buffer.h 
+h/ring_buffer.h  \
+h/pwm.h  \
+h/project.h  \
+ h/uart.h  \
+h/system.h  \
+h/axis.h 

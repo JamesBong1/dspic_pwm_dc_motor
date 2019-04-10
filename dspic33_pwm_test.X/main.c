@@ -24,6 +24,7 @@
 #include "ring_buffer.h"
 #include "uart.h"          /* User funct/params, such as InitApp              */
 #include "cli.h"
+#include "axis.h"
 
 //update config bits to stop triggering the XC compiler warnings according
 //to the doc, for this chip; file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.36/docs/config_docs/33FJ128MC804.html
@@ -74,7 +75,7 @@ int16_t main(void)
     EnableUSBUARTTransmit;
     __delay_ms(500);
     
-    printf( "\n\rMMC-200 dc motor controller test version %s\n\r", _Version );
+    printf( "\n\n\n\n\r%s %s\n\r", _ProductTitle,_Version );
     __delay_ms(100);
     //P1TCONbits.PTEN=1;
 
@@ -95,6 +96,7 @@ int16_t main(void)
         Nop();
         Nop();
         command_handler( &uart_rx );
+        move_axis( axis_direction );
     }
 }
 
@@ -104,6 +106,7 @@ void command_handler( _ring_buffer *rx )
 
     if( !command_received )
         return;
+    
     EnableUSBUARTTransmit;
     __delay_ms(1);
     
@@ -113,7 +116,7 @@ void command_handler( _ring_buffer *rx )
 //		printf( "%c", rx->rx[i] );//printf( "%s%x", ( rx->rx[i]<0x0f)?"0x0":"0x", rx->rx[i] );
 //    printf( "\n\r" );
 
-        if( !execute_command( rx, cli_commands ) )
+        if( !execute_command( rx, cli_menu_ptr_list[current_cli_menu] ) )
             printf( "\n\rinvalid command!\n\r" );
     
     

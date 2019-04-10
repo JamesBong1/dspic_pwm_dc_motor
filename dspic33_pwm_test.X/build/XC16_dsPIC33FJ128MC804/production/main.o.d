@@ -6,5 +6,6 @@ h/project.h  \
 h/ring_buffer.h  \
 h/uart.h  \
 h/system.h  \
-h/cli.h  \
- h/ring_buffer.h 
+h/ring_buffer.h  \
+ h/cli.h  \
+h/axis.h 

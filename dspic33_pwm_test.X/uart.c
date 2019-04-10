@@ -10,7 +10,6 @@
 #include <stdio.h>
 #include <string.h>
 //#include <libpic30.h>
-#include "ring_buffer.h"
 #include "uart.h"
 #include "system.h"
 
@@ -19,6 +18,12 @@
 bool command_received;
 _ring_buffer uart_rx;
 
+void (*rx_isr_ptr)( _ring_buffer *rx_buf );
+
+void set_uart_rx_isr( void (*rx_method_p )(_ring_buffer *r) )
+{
+    rx_isr_ptr = rx_method_p;
+}
 //!Initialize UART1
 void initialize_uart(void)
 {
@@ -44,6 +49,8 @@ void initialize_uart(void)
     rxbuffer_purge(&uart_rx);
     
     command_received = false;
+    
+    set_uart_rx_isr( uart1_rx_isr );
 	//Don't enable receive interrupt here. Do it in main.c after board id is initialized.
 }
 
@@ -55,11 +62,32 @@ int UART1_PutChar(char c)
 	return 1;
 }
 
+void uart1_rx_isr( _ring_buffer *rx )
+{
+    switch( rxbuffer_peak( rx ) )
+    {  
+        case '\r':
+
+            command_received = true;
+            //rxbuffer_purge( &uart_rx );
+            break;
+        case '\b':
+
+            EnableUSBUARTTransmit;
+            printf( "\b \b" );
+            rxbuffer_clear_byte( rx );
+            break;
+        default:
+
+            EnableUSBUARTTransmit;
+            printf( "%c" , rxbuffer_peak( rx ) );
+            break;
+    }
+}
 //!UART1 Receive Interrupt
 //Function runs every time a character is received.
 //It strips whitespace and increments a counter when a full
 //line is received.
-//
 void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt( void )
 {
 	//clear flag
@@ -68,27 +96,27 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt( void )
     if( rx_complete( &uart_rx, U1RXREG ) == 0 )
         return;
     
-    switch( rxbuffer_peak( &uart_rx ) )
-    {
-        
-        case '\r':
-            
-            command_received = true;
-            //rxbuffer_purge( &uart_rx );
-            break;
-        case '\b':
-            
-            printf( "\b \b" );
-            rxbuffer_clear_byte( &uart_rx );
-            break;
-        default:
-            EnableUSBUARTTransmit;
-            //UART1_PutChar(data);
-            printf( "%c" , rxbuffer_peak( &uart_rx ) );
-            
-            break;
-    }
+    rx_isr_ptr( &uart_rx );
     
+//    switch( rxbuffer_peak( &uart_rx ) )
+//    {  
+//        case '\r':
+//
+//            command_received = true;
+//            //rxbuffer_purge( &uart_rx );
+//            break;
+//        case '\b':
+//
+//            EnableUSBUARTTransmit;
+//            printf( "\b \b" );
+//            rxbuffer_clear_byte( &uart_rx );
+//            break;
+//        default:
+//
+//            EnableUSBUARTTransmit;
+//            printf( "%c" , rxbuffer_peak( &uart_rx ) );
+//            break;
+//    }
     
     if( rxbuffer_full( &uart_rx ) )
         rxbuffer_purge( &uart_rx );

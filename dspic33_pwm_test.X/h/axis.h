@@ -28,29 +28,29 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef UART_H
-#define	UART_H
+#ifndef AXIS_H
+#define	AXIS_H
 
-#include <xc.h> // include processor files - each processor file is guarded.
-#include <stdbool.h>
-#include "system.h"
+#include <xc.h> // include processor files - each processor file is guarded.  
 #include "ring_buffer.h"
 
-#define DefaultBaudrate 38400							//!<Baud Rate we are running
-#define BRGVAL          ((FCY/DefaultBaudrate)/16)-1			//!<BRG register calculation
+typedef enum _AxisDirection
+{
+    kAxisIdle       ,
+    kAxisUP   = 0x41, //A
+    kAxisDown       ,
+    kAxisForward    ,
+    kAxisReverse    ,
+    kAxisStop = 0x53, //S 
+    cAxisDirections
+}_axis_direction;
 
-extern bool command_received;
+extern _axis_direction axis_direction;
 
-int UART1_Puts(const char *);
+void move_axis( _axis_direction dir );
+void axis_rx_isr( _ring_buffer *rx );
+// TODO Insert appropriate #include <>
 
-int UART1_PutChar(char);
-
-extern void initialize_uart(void);
-
-void uart1_rx_isr( _ring_buffer *rx );
-void set_uart_rx_isr( void (*rx_method_p )(_ring_buffer *r) );
-// TODO Insert declarations or function prototypes (right here) to leverage 
-// live documentation
 
 #ifdef	__cplusplus
 extern "C" {
@@ -63,5 +63,5 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif	/* UART_H */
+#endif	/* AXIS_H */
 

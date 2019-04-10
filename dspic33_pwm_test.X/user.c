@@ -16,7 +16,9 @@
 
 #include "pwm.h"
 #include "uart.h"
-#include "user.h"            /* variables/params used by user.c               */
+#include "user.h"
+#include "cli.h"
+#include "axis.h"            /* variables/params used by user.c               */
 
 //had to add 'extern' prototypes to avoid the implicit declaration error. mplab gcc bug???
 _stage_settings stage;
@@ -65,14 +67,11 @@ void InitApp(void)
     
     
     initialize_uart();
-    
+   
     initialize_pwm();
     
     /* Setup analog functionality and port direction */
-    
-    //set stage defaults
-    stage.accel     = 100000;	//setting	um/s/s
-    stage.position  = 0;        //???
-    stage.velocity  = 0.10;     //set low velocity by default???
-    
+    current_cli_menu = cMain;
+    axis_direction   = kAxisIdle;
+
 }

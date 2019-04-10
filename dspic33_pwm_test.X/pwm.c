@@ -9,6 +9,7 @@
 #include "xc.h"
 #include "pwm.h"
 #include "system.h"
+#include "user.h"
 
 
 void set_pwm_period( float period_us )
@@ -56,6 +57,10 @@ void set_pwm_period( float period_us )
 
 void initialize_pwm(void)
 {
+    //set stage defaults
+    stage.accel     = 100000;	//setting	um/s/s
+    stage.position  = 0;        //???
+    stage.velocity  = 0.10;     //set low velocity by default???
 	/*----------------------------------------------------------------------------------
      *  PxTCON: PWM Time Base Control Register
      *  This register is used for the selection of  the Time Base mode, time base input clock
@@ -87,21 +92,21 @@ void initialize_pwm(void)
     PWM1CON1bits.PMOD3 = 1;
     
     //enable IN1/IN2 of A4954 driver for PWM output
-    PWM1CON1bits.PWM_A4954_IN1 = 1;  
-    PWM1CON1bits.PWM_A4954_IN2 = 1;
+    PWM1CON1bits.PWM_A4954_IN1 = 0;  
+    PWM1CON1bits.PWM_A4954_IN2 = 0;
     
     PWM1CON2bits.IUE=1;     // Updates to the active P1DC1 registers are immediate  
     
-    set_pwm_duty_cycle(1,.5);
-    set_pwm_duty_cycle(2,.25);
-    set_pwm_duty_cycle(3,.75);
+    //set_pwm_duty_cycle(1,.5);
+    set_pwm_duty_cycle(2, stage.velocity);
+    set_pwm_duty_cycle(3, stage.velocity);
     /* Initialize peripherals */
 
 //  P1DC1 =24999;
 //	P1DC2 =24999;
 //	P1DC3 =24999; 
 
-//    P1TCONbits.PTEN=1; //to enable PWM 1 put this bit to 1    
+    P1TCONbits.PTEN=1; //to enable PWM 1 put this bit to 1    
 }
 
 

@@ -35,14 +35,35 @@
 #include <stdbool.h>
 #include "ring_buffer.h"
 
+typedef enum _CLIMotorMoveDirections
+{
+    cMotorIdle   ,
+    cMotorForward,
+    cMotorReverse,
+    cCLIMotorDirections
+}_cli_motor_direction;
+
+typedef enum CLIMenuList
+{
+	cMain	,
+	cJog	,
+	cCliMenus	
+}_cli_menu;
+
+extern _cli_menu current_cli_menu;
+
 typedef struct _CLICommandShell
 {
-	char        *token;         //used to gain execute a method
-	const char	*descriptor;
-	bool        (*entry)( char *rx_buf ); 
+	char            *token;         //used to gain execute a method
+	const char      *descriptor;
+  	/* single global method parameter used in method pointed 
+	   to by (*entry) */
+	const uint8_t   entry_par;
+	bool            (*entry)( char *rx_buf ); 
 }_cli_shell;
 
-extern _cli_shell cli_commands[];
+;
+extern _cli_shell *cli_menu_ptr_list[ cCliMenus ];
 
 int parse_raw_data( _ring_buffer * raw );
 

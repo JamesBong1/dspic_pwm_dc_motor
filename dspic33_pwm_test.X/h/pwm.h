@@ -67,7 +67,7 @@ typedef enum PWMTimeBaseModes
     kPWMTimeBaseModes
 }_pwm_time_base_mode;
 
-#define PWMTimeBaseMode kPWMContinousUpDown 
+#define PWMTimeBaseMode kPWMContinousUpDown //kPWMContinousUpDown 
 
 #define PWMMaxPeriod         0x07ff //period register is 15bits
 #define PWMDefaultPeriod_s  .001

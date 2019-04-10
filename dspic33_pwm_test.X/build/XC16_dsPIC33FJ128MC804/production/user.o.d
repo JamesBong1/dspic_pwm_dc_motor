@@ -4,4 +4,7 @@ h/pwm.h  \
  h/project.h  \
 h/uart.h  \
 h/system.h  \
-h/user.h 
+h/ring_buffer.h  \
+h/user.h  \
+h/cli.h  \
+ h/axis.h 
