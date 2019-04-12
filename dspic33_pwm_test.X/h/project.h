@@ -33,12 +33,17 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-#define _Version        "v19.4.10.0"
+#define _Version        "v19.4.12.0"
 /*
- * v19.4.10.0;
- * -create cli command to simply change direction<modulating one pwm while holding
- *  the other low> at a set velocity<10% duty cycle for this test case>, and 
- *  test that it is received and executed
+ * v19.4.12.0;
+ * - use pwm matching <both hbridge inputs have the same pwm when the motor is stopped>
+ *   whenever the motor is not in use
+ * - add manual velocity changes via the up/down keys of the keyboard. each change is 
+ *   set to plus/minus .01 == 1%, and test
+ * - enable DAC output 1, which is the bridge enable signal of the motor we use. this was
+ *   just copied/pasted from the current MMC-200 project used for production
+ * - break up axis sub routines into control and movment
+ * - increase pwm frequency to 200khz. NOTE!!! TODO: find proper way of choosing pwm frequency
  * note!!! I've learned the hard way that there is no way to get a good consistent
  *         pwm signal to drive a motor in the single event mode. !!!TODO!!! TODO:
  *         I'll have to figure out how to calculate the time needed to enable a

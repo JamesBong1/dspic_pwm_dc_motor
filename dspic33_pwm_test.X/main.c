@@ -42,7 +42,7 @@
 
 
 
-void command_handler( _ring_buffer *rx );
+void cli_command_handler( _ring_buffer *rx );
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
@@ -58,19 +58,13 @@ int16_t main(void)
     __C30_UART =1;
     /* Configure the oscillator for the device */
     ConfigureOscillator();
-
+      
     /* Initialize IO ports and peripherals */
     InitApp();
     
     
     /* TODO <INSERT USER APPLICATION CODE HERE> */
-//    PWM1CON1bits.PEN1H = 1;
-//    PWM1CON1bits.PEN1L = 1;
-//    PWM1CON1bits.PEN2H = 1;
-//    PWM1CON1bits.PEN2L = 1;
-//    PWM1CON1bits.PEN3H = 1;
-//    PWM1CON1bits.PEN3L = 1;
-    
+
     //DTCON1bits.DTA = 59;
     EnableUSBUARTTransmit;
     __delay_ms(500);
@@ -78,50 +72,39 @@ int16_t main(void)
     printf( "\n\n\n\n\r%s %s\n\r", _ProductTitle,_Version );
     __delay_ms(100);
     //P1TCONbits.PTEN=1;
-
+    
+    DACChipSelect = 0;  //Set Chip Select Low Before Transfer
+    SPI1BUF = ( /*sin_phase*/(0x0ff0/2) | DAC1Mask );
+    
     EnableUSBUARTReceive;
     __delay_ms(100);
     //Turn on UART RX interrupt after board addressing is completed
 	IFS0bits.U1RXIF = 0;
 	IEC0bits.U1RXIE = 1;
+    
+    
     while(1)
     {
-        //printf( "\n\rtesting." );
-        //__delay_ms(1000);
-        Nop();
-        Nop();
-        Nop();
-        Nop();
-        Nop();
-        Nop();
-        Nop();
-        command_handler( &uart_rx );
-        move_axis( axis_direction );
+        cli_command_handler( &uart_rx );
+        axis_command_handler( axis_command );
     }
 }
 
 
-void command_handler( _ring_buffer *rx )
-{    
+void cli_command_handler( _ring_buffer *rx )
+{
 
     if( !command_received )
         return;
-    
+
     EnableUSBUARTTransmit;
     __delay_ms(1);
-    
 
-//    printf( "\n\rreceived: " );
-//	for( i = 0; i < rx->head; i++ )
-//		printf( "%c", rx->rx[i] );//printf( "%s%x", ( rx->rx[i]<0x0f)?"0x0":"0x", rx->rx[i] );
-//    printf( "\n\r" );
+    if( !execute_command( rx, cli_menu_ptr_list[current_cli_menu] ) )
+        printf( "\n\rinvalid command!\n\r" );
 
-        if( !execute_command( rx, cli_menu_ptr_list[current_cli_menu] ) )
-            printf( "\n\rinvalid command!\n\r" );
-    
-    
     command_received = false;
-    //if( rxbuffer_full(rx) )
+
     rxbuffer_purge( rx );
 
     EnableUSBUARTReceive

@@ -45,8 +45,8 @@ typedef enum _CLIMotorMoveDirections
 
 typedef enum CLIMenuList
 {
-	cMain	,
-	cJog	,
+	cMain               ,
+	cManualAxisControl	,
 	cCliMenus	
 }_cli_menu;
 

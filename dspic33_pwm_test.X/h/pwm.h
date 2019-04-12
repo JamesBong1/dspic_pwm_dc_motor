@@ -71,7 +71,7 @@ typedef enum PWMTimeBaseModes
 
 #define PWMMaxPeriod         0x07ff //period register is 15bits
 #define PWMDefaultPeriod_s  .001
-#define PWMDefaultPeriod_us ( 100 * pow( 10, -6 ) )
+#define PWMDefaultPeriod_us ( 5 * pow( 10, -6 ) )
 
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation
@@ -80,6 +80,8 @@ typedef enum PWMTimeBaseModes
 
 #define PWM_A4954_IN1       PEN2H
 #define PWM_A4954_IN2       PEN3H
+#define PWM_A4954_IN3       PEN1H
+#define PWM_A4954_IN4       PEN3L
 
 void set_pwm_period( float period_us );
 

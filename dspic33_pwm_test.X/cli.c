@@ -18,10 +18,8 @@
 #include "axis.h"
 
 bool enter_cli_menu();
-bool print_stage_info();
+bool print_axis_info();
 bool print_help();
-bool print_jog_help();
-
 
 _cli_menu current_cli_menu;
 uint8_t  mthd_param;
@@ -30,49 +28,43 @@ uint16_t mthd_parameters[5];
 const char* cli_menu_title_strs[ cCliMenus ] =
 {
 	"main menu",
-	"axis jog" ,
+	"manual axis control" ,
 };
 
-_cli_shell main_cli_menu[] = 
+_cli_shell main_cli_menu[] =
 {
-    { "vel" , "vel n - set velocity <n:0-100>"                , NULL         , NULL             },
-    { "pos" , "pos n - set desired postion <n: -100 - 100 >"  , NULL         , NULL             },
-    { "jog" , "jog - manually control position of stage"      , cJog         , enter_cli_menu   },
-    { "info", "info - print current stage settings"           , NULL         , print_stage_info },
-    { "?"   , "? - help"                                      , NULL         , print_help       },
+    { "v"   , "v n  - set velocity <n:0-100>"                , NULL               , NULL           },
+    { "p"   , "p n  - set desired position <n: -100 - 100 >" , NULL               , NULL           },
+    { "mc"  , "mc   - manually control position of stage"    , cManualAxisControl , enter_cli_menu },
+    { "info", "info - print current axis settings"           , NULL               , print_axis_info},
+    { "?"   , "?    - help"                                  , NULL               , print_help     },
     { NULL }
 };
 
-_cli_shell motor_jog_menu[] = 
+_cli_shell motor_control_menu[] =
 {
-//    { "D"   , ""                    , cMotorReverse, cli_move_motor },
-//    { "C"   , ""                    , cMotorForward, cli_move_motor },
-    { "x"   , ""                    , cMain        , enter_cli_menu },
-    { "?"   , ""                    , NULL         , print_jog_help },
+    { "A"   , "up arrow   - increase velocity"  , NULL  , NULL          },
+    { "B"   , "down arrow - decrease velocity"  , NULL  , NULL          },
+    { "C"   , "left arrow - reverse"            , NULL  , NULL          },
+    { "D"   , "right arrow- forward"            , NULL  , NULL          },
+    { "s"   , "s - stop pwm"                    , NULL  , NULL          },
+    { "x"   , "x - exit menu"                   , cMain , enter_cli_menu},
+    { "?"   , ""                                , NULL  , print_help    },
     { NULL }
 };
 
 _cli_shell *cli_menu_ptr_list[ cCliMenus ] =
 {
 	&main_cli_menu[0] ,
-	&motor_jog_menu[0],		
+	&motor_control_menu[0],		
 };
 
-bool print_stage_info()
+bool print_axis_info()
 {
-    //printf( "\n\rMMC-200 dc motor controller test version %s", _Version );
-    printf( "\n\n\rstage info: " );
-    printf( "\n\rstage.velocity: %1.3f"             , (double)stage.velocity);
-    printf( "\n\rstage.acceleration: %ld um/s/s"    , stage.accel           );
-    printf( "\n\rstage.position: %ld\n\r"           , stage.position        );
-    return true;
-}
-
-
-bool print_jog_help()
-{
-    printf( "\n\rpress/hold left or right arrow keys to move stage " );
-    printf( "forward\n\ror reverse, respectively\n\renter x to exit jog mode\n\n\r" );
+    printf( "\n\n\raxis info: " );
+    printf( "\n\raxis.velocity:     %1.3f"      , (double)axis.velocity );
+    printf( "\n\raxis.acceleration: %ld um/s/s" , axis.accel            );
+    printf( "\n\raxis.position:     %ld\n\r"    , axis.position         );
     return true;
 }
 
@@ -80,14 +72,14 @@ bool print_help()
 {
     uint8_t i;
 	_cli_shell *temp_menu_ptr;
-	
-	temp_menu_ptr = main_cli_menu;
 
-    printf( "\n\r%s %s help menu\n\r", _ProductTitle,_Version );
-	
+	temp_menu_ptr = cli_menu_ptr_list[current_cli_menu];
+
+    printf( "\n\n\r%s %s help menu\n\r", _ProductTitle,_Version );
+
     for( i = 0; i < 55; i++ )
         printf("=");
-    
+
     printf( "\n\r" );
     
 	while( temp_menu_ptr->token )
@@ -96,7 +88,7 @@ bool print_help()
 		temp_menu_ptr++;
 	}
 	//cli_print_menu( cli_menu_ptr_list[current_cli_menu]/*SER_CMD_MENU*/ , cli_t.level );
-	
+
 	return true;
 }
 
@@ -115,7 +107,7 @@ bool enter_cli_menu()
 	
 	current_cli_menu = (_cli_menu)mthd_param;
 
-    if( current_cli_menu == cJog )
+    if( current_cli_menu == cManualAxisControl )
         set_uart_rx_isr( axis_rx_isr );
     else
         set_uart_rx_isr( uart1_rx_isr );

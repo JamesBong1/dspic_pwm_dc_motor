@@ -36,18 +36,36 @@
 
 typedef enum _AxisDirection
 {
-    kAxisIdle       ,
-    kAxisUP   = 0x41, //A
-    kAxisDown       ,
-    kAxisForward    ,
-    kAxisReverse    ,
-    kAxisStop = 0x53, //S 
+    kAxisIdle               ,
+    kAxisIncreaseSpeed =0x41, //A
+    kAxisDecreaseSpeed      ,
+    kAxisForward            ,
+    kAxisReverse            ,
+    kAxisSetVelocity        ,        
+    kAxisStop          =0x53, //S 
     cAxisDirections
-}_axis_direction;
+}_axis_command;
 
-extern _axis_direction axis_direction;
+extern _axis_command axis_command;
 
-void move_axis( _axis_direction dir );
+/**
+ * \brief   receives axis commands and delegates them to axis subroutines
+ *
+ * \param 	_axis_command cmd - command to handled
+ *
+ * \returns  
+ */
+void axis_command_handler();
+
+/**
+ * \brief   executes axis motion<forward, reverse, stop, etc...> commands
+ *
+ * \param 	_axis_command dir - motion command to be executed
+ *
+ * \returns  
+ */
+void axis_motion_handler( _axis_command dir );
+
 void axis_rx_isr( _ring_buffer *rx );
 // TODO Insert appropriate #include <>
 
