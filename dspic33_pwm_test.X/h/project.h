@@ -33,23 +33,18 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-#define _Version        "v19.4.12.0"
+#define _Version        "v19.4.15.0"
 /*
- * v19.4.12.0;
- * - use pwm matching <both hbridge inputs have the same pwm when the motor is stopped>
- *   whenever the motor is not in use
- * - add manual velocity changes via the up/down keys of the keyboard. each change is 
- *   set to plus/minus .01 == 1%, and test
- * - enable DAC output 1, which is the bridge enable signal of the motor we use. this was
- *   just copied/pasted from the current MMC-200 project used for production
- * - break up axis sub routines into control and movment
- * - increase pwm frequency to 200khz. NOTE!!! TODO: find proper way of choosing pwm frequency
+ * v19.4.15.0;
+ * - make dac output 1, A4954 enable1<Vref>, its highest level. the sense resistors
+ *   on A4954 should limit the current
+ * - play around with motor movement delay in test case
  * note!!! I've learned the hard way that there is no way to get a good consistent
  *         pwm signal to drive a motor in the single event mode. !!!TODO!!! TODO:
  *         I'll have to figure out how to calculate the time needed to enable a
  *         motor to get to a desired distance. 
  */
-#define _ProductTitle   "MMC-200 dc motor controller tester"
+#define _ProductTitle   "MMC-200 linear voicecoil tester"
 
 #define _Enable     1
 #define _Disable    0

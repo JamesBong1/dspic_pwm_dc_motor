@@ -45,7 +45,8 @@ void axis_rx_isr( _ring_buffer *rx )
     switch( rxbuffer_peak( rx ) )
     {  
         case '\r':
-
+            EnableUSBUARTTransmit;
+            printf( "\ne" );
             command_received = true;
             //P1TCONbits.PTEN = 0; //stop pwm
             break;
@@ -135,7 +136,7 @@ void axis_motion_handler( _axis_command dir )
             PWM1CON1bits.PWM_A4954_IN1 = 1;
  
             P1TCONbits.PTEN = 1;
-            __delay_ms(5);
+            __delay_ms(3);
             //P1TCONbits.PTEN = 0;
             PWM1CON1bits.PWM_A4954_IN2 = 1;
             //PWM1CON1bits.PWM_A4954_IN4 = 0;
@@ -151,7 +152,7 @@ void axis_motion_handler( _axis_command dir )
             //PWM1CON1bits.PWM_A4954_IN4 = 1;
   
             P1TCONbits.PTEN = 1;
-            __delay_ms(5);
+            __delay_ms(3);
             //P1TCONbits.PTEN = 0;
             PWM1CON1bits.PWM_A4954_IN1 = 1;
             //LATBbits.LATB12  = 1;       //ENABLE1_IN1     	Output  pin10    PWM1H2
@@ -159,12 +160,12 @@ void axis_motion_handler( _axis_command dir )
             break;
         case kAxisStop:
             
-            PWM1CON1bits.PWM_A4954_IN1 = 1;
+            //PWM1CON1bits.PWM_A4954_IN1 = 1;
             //PWM1CON1bits.PWM_A4954_IN3 = 0;
             
-            PWM1CON1bits.PWM_A4954_IN2 = 1;
+            //PWM1CON1bits.PWM_A4954_IN2 = 1;
             //PWM1CON1bits.PWM_A4954_IN4 = 0;
-            //P1TCONbits.PTEN = 1;
+            P1TCONbits.PTEN = 0;
             break;
         default:
             EnableUSBUARTTransmit;

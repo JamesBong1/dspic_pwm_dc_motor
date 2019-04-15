@@ -257,12 +257,12 @@ xc16-ld 1.36 (B)
 section                    address   length (PC units)   length (bytes) (dec)
 -------                    -------   -----------------   --------------------
 .text                        0x200              0x2a12          0x3f1b  (16155)
-.const                      0x2c12               0x31a           0x4a7  (1191)
-.dinit                      0x2f2c               0x1fa           0x2f7  (759)
-.text                       0x3126               0x780           0xb40  (2880)
-.init.delay32               0x38a6                0x1c            0x2a  (42)
+.const                      0x2c12               0x318           0x4a4  (1188)
+.dinit                      0x2f2a               0x1fa           0x2f7  (759)
+.text                       0x3124               0x788           0xb4c  (2892)
+.init.delay32               0x38ac                0x1c            0x2a  (42)
 
-                 Total "program" memory used (bytes):         0x5223  (21027) 16%
+                 Total "program" memory used (bytes):         0x522c  (21036) 16%
 
 
 "data" Memory  [Origin = 0x800, Length = 0x4000]
@@ -472,41 +472,41 @@ External Symbols in Program Memory (by address):
                   0x002b58                  ___floatdidf
                   0x002b78                  ___floatundidf
                   0x002bce                  ___umuldi3
-                  0x003126                  _set_axis_velocity
-                  0x00319e                  _axis_rx_isr
-                  0x0031f6                  _axis_command_handler
-                  0x003264                  _axis_motion_handler
-                  0x0032be                  _set_pwm_period
-                  0x00330a                  _initialize_pwm
-                  0x00337e                  _set_pwm_duty_cycle
-                  0x003452                  _print_axis_info
-                  0x00348c                  _print_help
-                  0x0034ea                  _enter_cli_menu
-                  0x003538                  _parse_raw_data
-                  0x003570                  _execute_command
-                  0x0035b2                  _initialize_periheral_mapping
-                  0x00364a                  _SPI1_Init
-                  0x00366e                  _InitApp
-                  0x00368e                  _rx_complete
-                  0x0036d2                  _rxbuffer_full
-                  0x0036ea                  _rxbuffer_purge
-                  0x0036fe                  _rxbuffer_clear_byte
-                  0x003736                  _rxbuffer_peak
-                  0x00374a                  _set_uart_rx_isr
-                  0x003756                  _initialize_uart
-                  0x003786                  _UART1_PutChar
-                  0x0037a0                  _uart1_rx_isr
-                  0x0037d8                  _main
-                  0x00381c                  _cli_command_handler
-                  0x003864                  _ConfigureOscillator
-                  0x0038a6                  ___delay32
+                  0x003124                  _set_axis_velocity
+                  0x00319c                  _axis_rx_isr
+                  0x0031fe                  _axis_command_handler
+                  0x00326c                  _axis_motion_handler
+                  0x0032c4                  _set_pwm_period
+                  0x003310                  _initialize_pwm
+                  0x003384                  _set_pwm_duty_cycle
+                  0x003458                  _print_axis_info
+                  0x003492                  _print_help
+                  0x0034f0                  _enter_cli_menu
+                  0x00353e                  _parse_raw_data
+                  0x003576                  _execute_command
+                  0x0035b8                  _initialize_periheral_mapping
+                  0x003650                  _SPI1_Init
+                  0x003674                  _InitApp
+                  0x003694                  _rx_complete
+                  0x0036d8                  _rxbuffer_full
+                  0x0036f0                  _rxbuffer_purge
+                  0x003704                  _rxbuffer_clear_byte
+                  0x00373c                  _rxbuffer_peak
+                  0x003750                  _set_uart_rx_isr
+                  0x00375c                  _initialize_uart
+                  0x00378c                  _UART1_PutChar
+                  0x0037a6                  _uart1_rx_isr
+                  0x0037de                  _main
+                  0x003822                  _cli_command_handler
+                  0x00386a                  _ConfigureOscillator
+                  0x0038ac                  ___delay32
 
 External Symbols in Program Memory (by name):
 
-                  0x003864                  _ConfigureOscillator
-                  0x00366e                  _InitApp
-                  0x00364a                  _SPI1_Init
-                  0x003786                  _UART1_PutChar
+                  0x00386a                  _ConfigureOscillator
+                  0x003674                  _InitApp
+                  0x003650                  _SPI1_Init
+                  0x00378c                  _UART1_PutChar
                   0x000326                  __AddressError
                   0x000344                  __AltAddressError
                   0x000356                  __AltDMACError
@@ -553,7 +553,7 @@ External Symbols in Program Memory (by name):
                   0x0010c8                  ___Scanf_cdnopsuxX
                   0x00297c                  ___adddf3
                   0x000490                  ___addsf3
-                  0x0038a6                  ___delay32
+                  0x0038ac                  ___delay32
                   0x00240c                  ___divdf3
                   0x00286e                  ___divdi3
                   0x00054a                  ___divsf3
@@ -614,45 +614,45 @@ External Symbols in Program Memory (by name):
                   0x00023c                  __psv_init
                   0x000200                  __resetPRI
                   0x0010b6                  __sscanf_cdnopsuxX
-                  0x0031f6                  _axis_command_handler
-                  0x003264                  _axis_motion_handler
-                  0x00319e                  _axis_rx_isr
-                  0x00381c                  _cli_command_handler
+                  0x0031fe                  _axis_command_handler
+                  0x00326c                  _axis_motion_handler
+                  0x00319c                  _axis_rx_isr
+                  0x003822                  _cli_command_handler
                   0x001268                  _div
-                  0x0034ea                  _enter_cli_menu
-                  0x003570                  _execute_command
+                  0x0034f0                  _enter_cli_menu
+                  0x003576                  _execute_command
                   0x0018d0                  _fclose
                   0x000790                  _fputc
                   0x001b7c                  _free
                   0x0012f4                  _fwrite
-                  0x0035b2                  _initialize_periheral_mapping
-                  0x00330a                  _initialize_pwm
-                  0x003756                  _initialize_uart
+                  0x0035b8                  _initialize_periheral_mapping
+                  0x003310                  _initialize_pwm
+                  0x00375c                  _initialize_uart
                   0x001258                  _isspace
                   0x00139c                  _ldiv
-                  0x0037d8                  _main
+                  0x0037de                  _main
                   0x001c46                  _malloc
                   0x0013c6                  _memchr
                   0x000750                  _memcpy
                   0x00075e                  _memset
-                  0x003538                  _parse_raw_data
-                  0x003452                  _print_axis_info
-                  0x00348c                  _print_help
+                  0x00353e                  _parse_raw_data
+                  0x003458                  _print_axis_info
+                  0x003492                  _print_help
                   0x00076c                  _putchar
-                  0x00368e                  _rx_complete
-                  0x0036fe                  _rxbuffer_clear_byte
-                  0x0036d2                  _rxbuffer_full
-                  0x003736                  _rxbuffer_peak
-                  0x0036ea                  _rxbuffer_purge
-                  0x003126                  _set_axis_velocity
-                  0x00337e                  _set_pwm_duty_cycle
-                  0x0032be                  _set_pwm_period
-                  0x00374a                  _set_uart_rx_isr
+                  0x003694                  _rx_complete
+                  0x003704                  _rxbuffer_clear_byte
+                  0x0036d8                  _rxbuffer_full
+                  0x00373c                  _rxbuffer_peak
+                  0x0036f0                  _rxbuffer_purge
+                  0x003124                  _set_axis_velocity
+                  0x003384                  _set_pwm_duty_cycle
+                  0x0032c4                  _set_pwm_period
+                  0x003750                  _set_uart_rx_isr
                   0x0013da                  _strchr
                   0x000770                  _strcmp
                   0x0013f2                  _strlen
                   0x0023d2                  _tolower
-                  0x0037a0                  _uart1_rx_isr
+                  0x0037a6                  _uart1_rx_isr
                   0x001960                  fclose.XX_elo:_closeall
                   0x0007dc                  printf_cdfFnopsuxX.XXeo:_prout
                   0x00109e                  sscanf_cdnopsuxX.XXeo:_scin
@@ -1080,7 +1080,7 @@ __FUID3
  .debug_abbrev    0x00087e         0xd1 build/XC16_dsPIC33FJ128MC804/production/h/ring_buffer.o
  .debug_abbrev    0x00094f        0x18b build/XC16_dsPIC33FJ128MC804/production/h/axis.o
 
-.debug_line       0x000000        0xb7b
+.debug_line       0x000000        0xb7c
  *(.debug_line)
  .debug_line      0x000000         0x1a build/XC16_dsPIC33FJ128MC804/production/configuration_bits.o
  .debug_line      0x00001a         0xf8 build/XC16_dsPIC33FJ128MC804/production/interrupts.o
@@ -1092,9 +1092,9 @@ __FUID3
  .debug_line      0x000710        0x144 build/XC16_dsPIC33FJ128MC804/production/uart.o
  .debug_line      0x000854         0xe8 build/XC16_dsPIC33FJ128MC804/production/cli.o
  .debug_line      0x00093c         0xc2 build/XC16_dsPIC33FJ128MC804/production/h/ring_buffer.o
- .debug_line      0x0009fe        0x17d build/XC16_dsPIC33FJ128MC804/production/h/axis.o
+ .debug_line      0x0009fe        0x17e build/XC16_dsPIC33FJ128MC804/production/h/axis.o
 
-.debug_frame      0x000000        0x600
+.debug_frame      0x000000        0x60e
  *(.debug_frame)
  .debug_frame     0x000000         0x38 build/XC16_dsPIC33FJ128MC804/production/interrupts.o
  .debug_frame     0x000038         0x68 build/XC16_dsPIC33FJ128MC804/production/main.o
@@ -1105,7 +1105,7 @@ __FUID3
  .debug_frame     0x0002ee         0xd2 build/XC16_dsPIC33FJ128MC804/production/uart.o
  .debug_frame     0x0003c0         0xe6 build/XC16_dsPIC33FJ128MC804/production/cli.o
  .debug_frame     0x0004a6         0xa0 build/XC16_dsPIC33FJ128MC804/production/h/ring_buffer.o
- .debug_frame     0x000546         0xba build/XC16_dsPIC33FJ128MC804/production/h/axis.o
+ .debug_frame     0x000546         0xc8 build/XC16_dsPIC33FJ128MC804/production/h/axis.o
 
 .debug_str        0x000000        0x2a8
  *(.debug_str)
@@ -2649,52 +2649,52 @@ __c30_signature
  .ivt._U1RXInterrupt
                   0x00002a          0x2 build/XC16_dsPIC33FJ128MC804/production/uart.o
 
-.const              0xac12        0x31a load address 0x002c12  
- .const             0xac12        0x22e build/XC16_dsPIC33FJ128MC804/production/cli.o
- .const             0xae40         0x98 build/XC16_dsPIC33FJ128MC804/production/h/axis.o
- .const             0xaed8         0x50 build/XC16_dsPIC33FJ128MC804/production/main.o
- .const             0xaf28          0x4 build/XC16_dsPIC33FJ128MC804/production/uart.o
+.const              0xac12        0x318 load address 0x002c12  
+ .const             0xac12        0x22a build/XC16_dsPIC33FJ128MC804/production/cli.o
+ .const             0xae3c         0x9c build/XC16_dsPIC33FJ128MC804/production/h/axis.o
+ .const             0xaed8         0x4e build/XC16_dsPIC33FJ128MC804/production/main.o
+ .const             0xaf26          0x4 build/XC16_dsPIC33FJ128MC804/production/uart.o
 
-.dinit            0x002f2c        0x1fa
- .dinit           0x002f2c        0x1fa data_init
+.dinit            0x002f2a        0x1fa
+ .dinit           0x002f2a        0x1fa data_init
 
-.text             0x003126        0x780
- .text            0x003126        0x198 build/XC16_dsPIC33FJ128MC804/production/h/axis.o
-                  0x003126                  _set_axis_velocity
-                  0x00319e                  _axis_rx_isr
-                  0x0031f6                  _axis_command_handler
-                  0x003264                  _axis_motion_handler
- .text            0x0032be        0x194 build/XC16_dsPIC33FJ128MC804/production/pwm.o
-                  0x0032be                  _set_pwm_period
-                  0x00330a                  _initialize_pwm
-                  0x00337e                  _set_pwm_duty_cycle
- .text            0x003452        0x160 build/XC16_dsPIC33FJ128MC804/production/cli.o
-                  0x003452                  _print_axis_info
-                  0x00348c                  _print_help
-                  0x0034ea                  _enter_cli_menu
-                  0x003538                  _parse_raw_data
-                  0x003570                  _execute_command
- .text            0x0035b2         0xdc build/XC16_dsPIC33FJ128MC804/production/user.o
-                  0x0035b2                  _initialize_periheral_mapping
-                  0x00364a                  _SPI1_Init
-                  0x00366e                  _InitApp
- .text            0x00368e         0xbc build/XC16_dsPIC33FJ128MC804/production/h/ring_buffer.o
-                  0x00368e                  _rx_complete
-                  0x0036d2                  _rxbuffer_full
-                  0x0036ea                  _rxbuffer_purge
-                  0x0036fe                  _rxbuffer_clear_byte
-                  0x003736                  _rxbuffer_peak
- .text            0x00374a         0x8e build/XC16_dsPIC33FJ128MC804/production/uart.o
-                  0x00374a                  _set_uart_rx_isr
-                  0x003756                  _initialize_uart
-                  0x003786                  _UART1_PutChar
-                  0x0037a0                  _uart1_rx_isr
- .text            0x0037d8         0x8c build/XC16_dsPIC33FJ128MC804/production/main.o
-                  0x0037d8                  _main
-                  0x00381c                  _cli_command_handler
- .text            0x003864         0x42 build/XC16_dsPIC33FJ128MC804/production/system.o
-                  0x003864                  _ConfigureOscillator
+.text             0x003124        0x788
+ .text            0x003124        0x1a0 build/XC16_dsPIC33FJ128MC804/production/h/axis.o
+                  0x003124                  _set_axis_velocity
+                  0x00319c                  _axis_rx_isr
+                  0x0031fe                  _axis_command_handler
+                  0x00326c                  _axis_motion_handler
+ .text            0x0032c4        0x194 build/XC16_dsPIC33FJ128MC804/production/pwm.o
+                  0x0032c4                  _set_pwm_period
+                  0x003310                  _initialize_pwm
+                  0x003384                  _set_pwm_duty_cycle
+ .text            0x003458        0x160 build/XC16_dsPIC33FJ128MC804/production/cli.o
+                  0x003458                  _print_axis_info
+                  0x003492                  _print_help
+                  0x0034f0                  _enter_cli_menu
+                  0x00353e                  _parse_raw_data
+                  0x003576                  _execute_command
+ .text            0x0035b8         0xdc build/XC16_dsPIC33FJ128MC804/production/user.o
+                  0x0035b8                  _initialize_periheral_mapping
+                  0x003650                  _SPI1_Init
+                  0x003674                  _InitApp
+ .text            0x003694         0xbc build/XC16_dsPIC33FJ128MC804/production/h/ring_buffer.o
+                  0x003694                  _rx_complete
+                  0x0036d8                  _rxbuffer_full
+                  0x0036f0                  _rxbuffer_purge
+                  0x003704                  _rxbuffer_clear_byte
+                  0x00373c                  _rxbuffer_peak
+ .text            0x003750         0x8e build/XC16_dsPIC33FJ128MC804/production/uart.o
+                  0x003750                  _set_uart_rx_isr
+                  0x00375c                  _initialize_uart
+                  0x00378c                  _UART1_PutChar
+                  0x0037a6                  _uart1_rx_isr
+ .text            0x0037de         0x8c build/XC16_dsPIC33FJ128MC804/production/main.o
+                  0x0037de                  _main
+                  0x003822                  _cli_command_handler
+ .text            0x00386a         0x42 build/XC16_dsPIC33FJ128MC804/production/system.o
+                  0x00386a                  _ConfigureOscillator
 
-.init.delay32     0x0038a6         0x1c
- .init.delay32    0x0038a6         0x1c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
-                  0x0038a6                  ___delay32
+.init.delay32     0x0038ac         0x1c
+ .init.delay32    0x0038ac         0x1c c:/program files (x86)/microchip/xc16/v1.36/bin/bin/../../lib\liblega-pic30-elf.a(delay32.Leo)
+                  0x0038ac                  ___delay32

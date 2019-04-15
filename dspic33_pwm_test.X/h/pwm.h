@@ -71,6 +71,9 @@ typedef enum PWMTimeBaseModes
 
 #define PWMMaxPeriod         0x07ff //period register is 15bits
 #define PWMDefaultPeriod_s  .001
+
+//100   - 10khz
+//5     - 200khz
 #define PWMDefaultPeriod_us ( 5 * pow( 10, -6 ) )
 
 // TODO Insert declarations or function prototypes (right here) to leverage 

@@ -42,7 +42,7 @@ typedef enum _AxisDirection
     kAxisForward            ,
     kAxisReverse            ,
     kAxisSetVelocity        ,        
-    kAxisStop          =0x53, //S 
+    kAxisStop          =0x73, //S 
     cAxisDirections
 }_axis_command;
 
