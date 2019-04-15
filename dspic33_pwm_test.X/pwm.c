@@ -61,6 +61,7 @@ void initialize_pwm(void)
     axis.accel     = 100000;	//setting	um/s/s
     axis.position  = 0;        //???
     axis.velocity  = 0.50;     //set low velocity by default???
+    
 	/*----------------------------------------------------------------------------------
      *  PxTCON: PWM Time Base Control Register
      *  This register is used for the selection of  the Time Base mode, time base input clock
@@ -86,22 +87,24 @@ void initialize_pwm(void)
     set_pwm_period( PWMDefaultPeriod_us );
  
     P1SECMP=0;
-
-    PWM1CON1bits.PMOD1 = 1; //the pairs PWM1H e PWM1L are NOT guided in complementary mode so i don't have to use the Dead Time register
-    PWM1CON1bits.PMOD2 = 1; //the pairs PWM2H e PWM2L are NOT guided in complementary mode so i don't have to use the Dead Time register
-    PWM1CON1bits.PMOD3 = 1;
     
-    //enable IN1/IN2 of A4954 driver for PWM output
-    PWM1CON1bits.PWM_A4954_IN1 = 0;  
-    PWM1CON1bits.PWM_A4954_IN2 = 0;
-    PWM1CON1bits.PWM_A4954_IN3 = 0;
-    PWM1CON1bits.PWM_A4954_IN4 = 0;
+    //using IN3<PEN1H:PIN14>/IN4<PEN3L:PIN9> of A4954 driver. therefore we want to have pairs
+    //1 and 3 of PWM1 module to be complementary of each other
+    PWM1CON1bits.PMOD1 = PWMIOComplementaryMode; //the pairs PWM1H e PWM1L are NOT guided in complementary mode so i don't have to use the Dead Time register
+    //PWM1CON1bits.PMOD2 = 1; //the pairs PWM2H e PWM2L are NOT guided in complementary mode so i don't have to use the Dead Time register
+    PWM1CON1bits.PMOD3 = PWMIOComplementaryMode;
+    
+    //disable PWM IO
+    //PWM1CON1bits.PWM_A4954_IN1 = 0;  
+    //PWM1CON1bits.PWM_A4954_IN2 = 0;
+    PWM1CON1bits.PWM_A4954_IN3 = 1;
+    PWM1CON1bits.PWM_A4954_IN4 = 1;
     
     PWM1CON2bits.IUE=1;     // Updates to the active P1DC1 registers are immediate  
     
-    set_pwm_duty_cycle(1, axis.velocity);
-    set_pwm_duty_cycle(2, axis.velocity);
-    set_pwm_duty_cycle(3, axis.velocity);
+    set_pwm_duty_cycle(1, ( 1 - axis.velocity ));
+    //set_pwm_duty_cycle(2, axis.velocity);
+    set_pwm_duty_cycle(3, ( 1 - axis.velocity ));
     /* Initialize peripherals */
 
 //  P1DC1 =24999;

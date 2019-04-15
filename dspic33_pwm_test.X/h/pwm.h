@@ -52,7 +52,16 @@
 //10 = PWM time base input clock period is 16 TCY (1:16 prescale)
 //01 = PWM time base input clock period is 4 TCY (1:4 prescale)
 //00 = PWM time base input clock period is TCY (1:1 prescale)
-#define PWMPrescale  0b01 //1:1
+typedef enum PxTCONPTCKPSBits
+{
+    PxTCONPrescaleBy1 ,
+    PxTCONPrescaleBy4 ,
+    PxTCONPrescaleBy16,
+    PxTCONPrescaleBy64,
+    PxTCONPrescaleBits
+}_PxTCONPTCKSBits;
+
+#define PWMPrescale  PxTCONPrescaleBy4//0b01 //1:1
 
 //11 = PWM time base operates in Continuous Up/Down Count mode with interrupts for double PWM updates
 //10 = PWM time base operates in Continuous Up/Down Count mode
@@ -67,6 +76,20 @@ typedef enum PWMTimeBaseModes
     kPWMTimeBaseModes
 }_pwm_time_base_mode;
 
+/*-------------------------------------------------------------------------
+ * PWMxCON1: PWM Control Register 1
+ * PMOD4:PMOD1: PWM I/O Pair Mode bits
+ * 1 = PWM I/O pin pair is in Independent Output mode
+ * 0 = PWM I/O pin pair is in Complementary Output mode 
+ -------------------------------------------------------------------------*/
+typedef enum PWMIOPinMode
+{
+    PWMIOComplementaryMode,
+    PWMIOIndependentMode  ,
+    PWMIOModes
+}_PWMIOPinMode;
+
+
 #define PWMTimeBaseMode kPWMContinousUpDown //kPWMContinousUpDown 
 
 #define PWMMaxPeriod         0x07ff //period register is 15bits
@@ -74,7 +97,7 @@ typedef enum PWMTimeBaseModes
 
 //100   - 10khz
 //5     - 200khz
-#define PWMDefaultPeriod_us ( 5 * pow( 10, -6 ) )
+#define PWMDefaultPeriod_us ( 50 * pow( 10, -6 ) )
 
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation

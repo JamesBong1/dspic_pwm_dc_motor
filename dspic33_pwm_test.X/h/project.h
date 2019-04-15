@@ -33,17 +33,19 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-#define _Version        "v19.4.15.0"
+#define _Version        "v19.4.15.1"
 /*
- * v19.4.15.0;
- * - make dac output 1, A4954 enable1<Vref>, its highest level. the sense resistors
- *   on A4954 should limit the current
- * - play around with motor movement delay in test case
- * note!!! I've learned the hard way that there is no way to get a good consistent
- *         pwm signal to drive a motor in the single event mode. !!!TODO!!! TODO:
- *         I'll have to figure out how to calculate the time needed to enable a
- *         motor to get to a desired distance. 
+ * v19.4.15.1
+ * - switch to motor driver #2<IN3,IN4,EN2> of the A4954. this was done since motor 
+ *   driver #1<IN1, IN2, EN1> use PEN2H and PEN2H. We can't drive complementary PWM 
+ *   signal with two Hs. one of the PWMs must be an L. And, IN3 and IN4, use PEN1H
+ *   and PEN3L respectively
+ * - ensure PWM driving signals are always complementing each other. and, that 
+ *   they are both at 50% duty cycle when the motor is stopped 
+ *   TODO:I'll have to figure out how to calculate the time needed to enable a
+ *        motor to get to a desired distance.
  */
+
 #define _ProductTitle   "MMC-200 linear voicecoil tester"
 
 #define _Enable     1

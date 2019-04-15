@@ -34,10 +34,9 @@ void set_axis_velocity( float velocity )
     
     axis.velocity = velocity;
     
-    set_pwm_duty_cycle(1, axis.velocity);
-    set_pwm_duty_cycle(2, axis.velocity);
-    set_pwm_duty_cycle(3, axis.velocity);
-
+    //set_pwm_duty_cycle(1, axis.velocity);
+    //set_pwm_duty_cycle(2, axis.velocity);
+    //set_pwm_duty_cycle(3, axis.velocity);
 }
 
 void axis_rx_isr( _ring_buffer *rx )
@@ -131,14 +130,24 @@ void axis_motion_handler( _axis_command dir )
     {
         case kAxisForward:
             
-            PWM1CON1bits.PWM_A4954_IN2 = 0;
+            //PWM1CON1bits.PWM_A4954_IN2 = 0;
             
-            PWM1CON1bits.PWM_A4954_IN1 = 1;
+            //PWM1CON1bits.PWM_A4954_IN1 = 1;
  
-            P1TCONbits.PTEN = 1;
-            __delay_ms(3);
+            //P1TCONbits.PTEN = 1;
+            set_pwm_duty_cycle(3, axis.velocity);
+            //set_pwm_duty_cycle(2, axis.velocity);
+            set_pwm_duty_cycle(1, axis.velocity);
+//            __delay_ms(10);
+//            
+//            P1DC1 = 0x0137;
+//            P1DC3 = 0x0137;
+            //set_pwm_duty_cycle(1, 0.50 );
+            //set_pwm_duty_cycle(2, axis.velocity);
+            //set_pwm_duty_cycle(3, 0.50 );
+            
             //P1TCONbits.PTEN = 0;
-            PWM1CON1bits.PWM_A4954_IN2 = 1;
+            //PWM1CON1bits.PWM_A4954_IN2 = 1;
             //PWM1CON1bits.PWM_A4954_IN4 = 0;
             
             //LATBbits.LATB10  = 1;       //ENABLE1_IN1     	Output  pin10    PWM1H2
@@ -146,15 +155,26 @@ void axis_motion_handler( _axis_command dir )
             break;
         case kAxisReverse:
             
-            PWM1CON1bits.PWM_A4954_IN1 = 0;
+            //PWM1CON1bits.PWM_A4954_IN1 = 0;
 
-            PWM1CON1bits.PWM_A4954_IN2 = 1;
+            //PWM1CON1bits.PWM_A4954_IN2 = 1;
             //PWM1CON1bits.PWM_A4954_IN4 = 1;
   
-            P1TCONbits.PTEN = 1;
-            __delay_ms(3);
+            //P1TCONbits.PTEN = 1;
+ 
+            set_pwm_duty_cycle(1, ( 1 - axis.velocity ) );
+            //set_pwm_duty_cycle(2, axis.velocity);
+            set_pwm_duty_cycle(3, ( 1 - axis.velocity ) );
+            
+//            __delay_ms(10);
+// 
+//            P1DC1 = 0x0137;
+//            P1DC3 = 0x0137;
+            //set_pwm_duty_cycle(1, 0.50);
+            //set_pwm_duty_cycle(2, axis.velocity);
+            //set_pwm_duty_cycle(3, 0.50 );
             //P1TCONbits.PTEN = 0;
-            PWM1CON1bits.PWM_A4954_IN1 = 1;
+            //PWM1CON1bits.PWM_A4954_IN1 = 1;
             //LATBbits.LATB12  = 1;       //ENABLE1_IN1     	Output  pin10    PWM1H2
             //LATBbits.LATB14  = 1;       //ENABLE2_IN3		Output  pin14    PWM1H1
             break;
