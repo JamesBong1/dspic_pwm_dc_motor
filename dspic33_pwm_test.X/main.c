@@ -25,6 +25,7 @@
 #include "uart.h"          /* User funct/params, such as InitApp              */
 #include "cli.h"
 #include "axis.h"
+#include "encoder.h"
 
 //update config bits to stop triggering the XC compiler warnings according
 //to the doc, for this chip; file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.36/docs/config_docs/33FJ128MC804.html
@@ -87,6 +88,9 @@ int16_t main(void)
     {
         cli_command_handler( &uart_rx );
         axis_command_handler( axis_command );
+        
+        if( dump_encoder_readings )
+            dump_encoder_data();
     }
 }
 

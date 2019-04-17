@@ -28,47 +28,21 @@
 
 // This is a guard condition so that contents of this file are not included
 // more than once.  
-#ifndef RING_BUFFER_H
-#define	RING_BUFFER_H
+#ifndef ENCODER_H
+#define	ENCODER_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <stdbool.h>
 
-/* \brief  Receive buffer size: 2,4,8,16,32,64,128 or 256 bytes. */
-#define RXRingBuffSize 64
+extern bool dump_encoder_readings;
+//extern volatile long encoder_readings[100];
+extern uint8_t idx_counter;
+extern volatile uint32_t encoder_tick;
+extern volatile uint32_t encoder_ticks[100];
 
-/* \brief Receive buffer mask. */
-#define USART_RX_BUFFER_MASK ( RXRingBuffSize - 1 )
+void dump_encoder_data();
 
-
-#if( RXRingBuffSize & USART_RX_BUFFER_MASK )
-    #error RX buffer size is not a power of 2
-#endif
-
-
-
-/* \brief USART transmit and receive ring buffer. */
-typedef struct _RXRingBuffer
-{
-	/* \brief Receive buffer. */
-	volatile uint8_t rx[RXRingBuffSize];
-	/* \brief Receive buffer head. */
-	volatile uint8_t head;
-	/* \brief Receive buffer tail. */
-	volatile uint8_t tail;
-}_ring_buffer;
-
-extern _ring_buffer uart_rx;
-
-bool    rxbuffer_full(_ring_buffer * rx);
-bool    rxbuffer_data_available(_ring_buffer *rx);
-uint8_t rxbuffer_getByte(_ring_buffer *rx);
-uint8_t rx_complete(_ring_buffer *rx, uint8_t rx_data);
-void    rxbuffer_purge(_ring_buffer * rx);
-void    rxbuffer_clear_byte(_ring_buffer * rx);
-uint8_t rxbuffer_peak(_ring_buffer * rx);
-//void USART_DataRegEmpty(USART_data_t * usart_data);
-
+void initialize_qei1();
 
 #ifdef	__cplusplus
 extern "C" {
@@ -81,5 +55,5 @@ extern "C" {
 }
 #endif /* __cplusplus */
 
-#endif	/* RING_BUFFER_H */
+#endif	/* ENCODER_H */
 

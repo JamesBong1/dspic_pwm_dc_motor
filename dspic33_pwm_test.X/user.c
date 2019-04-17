@@ -19,7 +19,7 @@
 #include "user.h"
 #include "cli.h"
 #include "axis.h"            /* variables/params used by user.c               */
-
+#include "encoder.h"
 
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
@@ -50,13 +50,27 @@ void initialize_periheral_mapping(void)
 	__builtin_write_OSCCONL(OSCCON | 0x40); //Set IO Lock
 }
 
+void initialize_timers()
+{
+    T2CON = 0x0000;		//Driver Interrupt
+
+    PR2 = 10000;
+
+    IFS0bits.T2IF = 0;
+    IPC1bits.T2IP = 5;
+
+    IEC0bits.T2IE = 1;
+    T2CONbits.TON = 0;   
+}
+
+
 //!Initialize SPI1
-void SPI1_Init()
+void initialize_spi1()
 {
 	/* enable SPI1 interrupt*/
 	IEC0bits.SPI1IE = 1;
 	
-		/* set interrupt priority level */
+    /* set interrupt priority level */
 	IPC2bits.SPI1IP = 6;
 	
 	//Secondary Prescaler 3:1
@@ -101,14 +115,24 @@ void InitApp(void)
     TRISAbits.TRISA9  =  0;     //DAC_LOAD  		Output  pin35   A9
 	TRISAbits.TRISA4  =  0;		//DAC_CHIP_SELECT   Output  pin34   A4
     
+    initialize_timers();
     
     initialize_uart();
    
-    SPI1_Init();
+    initialize_spi1();
+    
+    initialize_qei1();
+    
     initialize_pwm();
     
     /* Setup analog functionality and port direction */
     current_cli_menu = cMain;
     axis_command   = kAxisIdle;
+}
 
+
+void __attribute__((interrupt, no_auto_psv)) _T2Interrupt( void )
+{
+    encoder_ticks[idx_counter] = encoder_tick++;
+    IFS0bits.T2IF = 0;
 }

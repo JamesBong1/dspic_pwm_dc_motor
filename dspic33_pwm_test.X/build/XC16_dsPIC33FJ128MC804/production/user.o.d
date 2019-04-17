@@ -7,4 +7,5 @@ h/system.h  \
 h/ring_buffer.h  \
 h/user.h  \
 h/cli.h  \
- h/axis.h 
+ h/axis.h  \
+h/encoder.h 

@@ -50,6 +50,19 @@ bool rxbuffer_full(_ring_buffer * rx)
 	return (_Bool)( ( rx->head >= (RXRingBuffSize-1) )?1:0 );
 }
 
+
+bool rxbuffer_data_available(_ring_buffer *rx)
+{
+    /* Make copies to make sure that volatile access is specified. */
+	uint8_t tempHead = rx->head;
+	uint8_t tempTail = rx->tail;
+
+	/* There are data left in the buffer unless Head and Tail are equal. */
+	return (tempHead != tempTail);   
+}
+
+
+
 /*! \brief  clears rx buffer
  *
  *  \param usart_data       The USART_data_t struct instance.

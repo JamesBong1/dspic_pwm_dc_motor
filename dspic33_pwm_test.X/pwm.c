@@ -100,7 +100,7 @@ void initialize_pwm(void)
     PWM1CON1bits.PWM_A4954_IN3 = 1;
     PWM1CON1bits.PWM_A4954_IN4 = 1;
     
-    PWM1CON2bits.IUE=1;     // Updates to the active P1DC1 registers are immediate  
+    PWM1CON2bits.IUE=0;     // Updates to the active P1DC1 registers are immediate  
     
     set_pwm_duty_cycle(1, ( 1 - axis.velocity ));
     //set_pwm_duty_cycle(2, axis.velocity);

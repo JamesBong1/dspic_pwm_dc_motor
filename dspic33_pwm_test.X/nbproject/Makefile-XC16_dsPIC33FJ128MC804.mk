@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c pwm.c uart.c cli.c h/ring_buffer.c h/axis.c
+SOURCEFILES_QUOTED_IF_SPACED=configuration_bits.c interrupts.c main.c system.c traps.c user.c pwm.c uart.c cli.c h/ring_buffer.c h/axis.c h/encoder.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/cli.o ${OBJECTDIR}/h/ring_buffer.o ${OBJECTDIR}/h/axis.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/cli.o.d ${OBJECTDIR}/h/ring_buffer.o.d ${OBJECTDIR}/h/axis.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/cli.o ${OBJECTDIR}/h/ring_buffer.o ${OBJECTDIR}/h/axis.o ${OBJECTDIR}/h/encoder.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/pwm.o.d ${OBJECTDIR}/uart.o.d ${OBJECTDIR}/cli.o.d ${OBJECTDIR}/h/ring_buffer.o.d ${OBJECTDIR}/h/axis.o.d ${OBJECTDIR}/h/encoder.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/cli.o ${OBJECTDIR}/h/ring_buffer.o ${OBJECTDIR}/h/axis.o
+OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/pwm.o ${OBJECTDIR}/uart.o ${OBJECTDIR}/cli.o ${OBJECTDIR}/h/ring_buffer.o ${OBJECTDIR}/h/axis.o ${OBJECTDIR}/h/encoder.o
 
 # Source Files
-SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c pwm.c uart.c cli.c h/ring_buffer.c h/axis.c
+SOURCEFILES=configuration_bits.c interrupts.c main.c system.c traps.c user.c pwm.c uart.c cli.c h/ring_buffer.c h/axis.c h/encoder.c
 
 
 CFLAGS=
@@ -171,6 +171,13 @@ ${OBJECTDIR}/h/axis.o: h/axis.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE)  h/axis.c  -o ${OBJECTDIR}/h/axis.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/h/axis.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_XC16_dsPIC33FJ128MC804=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/h/axis.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+${OBJECTDIR}/h/encoder.o: h/encoder.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/h" 
+	@${RM} ${OBJECTDIR}/h/encoder.o.d 
+	@${RM} ${OBJECTDIR}/h/encoder.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  h/encoder.c  -o ${OBJECTDIR}/h/encoder.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/h/encoder.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1    -omf=elf -DXPRJ_XC16_dsPIC33FJ128MC804=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/h/encoder.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 else
 ${OBJECTDIR}/configuration_bits.o: configuration_bits.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -248,6 +255,13 @@ ${OBJECTDIR}/h/axis.o: h/axis.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/h/axis.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  h/axis.c  -o ${OBJECTDIR}/h/axis.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/h/axis.o.d"        -g -omf=elf -DXPRJ_XC16_dsPIC33FJ128MC804=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
 	@${FIXDEPS} "${OBJECTDIR}/h/axis.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
+${OBJECTDIR}/h/encoder.o: h/encoder.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}/h" 
+	@${RM} ${OBJECTDIR}/h/encoder.o.d 
+	@${RM} ${OBJECTDIR}/h/encoder.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  h/encoder.c  -o ${OBJECTDIR}/h/encoder.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/h/encoder.o.d"        -g -omf=elf -DXPRJ_XC16_dsPIC33FJ128MC804=$(CND_CONF)  -legacy-libc  $(COMPARISON_BUILD)  -I"h" -O0 -msmart-io=1 -Wall -msfr-warn=off  
+	@${FIXDEPS} "${OBJECTDIR}/h/encoder.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 

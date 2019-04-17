@@ -45,7 +45,7 @@ void axis_rx_isr( _ring_buffer *rx )
     {  
         case '\r':
             EnableUSBUARTTransmit;
-            printf( "\ne" );
+            printf( "\n\r" );
             command_received = true;
             //P1TCONbits.PTEN = 0; //stop pwm
             break;
