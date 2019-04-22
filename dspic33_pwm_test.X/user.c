@@ -13,130 +13,129 @@
     #endif
 #endif
 
-#include <stdint.h>          /* For uint16_t definition                       */
-#include <stdbool.h>         /* For true/false definition                     */
-#include "user.h"            /* variables/params used by user.c               */
 
-/******************************************************************************/
-/* User Functions                                                             */
-/******************************************************************************/
-#define PWMMotorControl
+#include "pwm.h"
+#include "uart.h"
+#include "user.h"
+#include "cli.h"
+#include "axis.h"            /* variables/params used by user.c               */
+#include "encoder.h"
 
 
 /* <Initialize variables in user.h and insert code for user algorithms.> */
-void initialized_pwm_module(void)
+//!Map Peripheral Inputs and Outputs to Pins
+void initialize_periheral_mapping(void)
 {
-	/*----------------------------------------------------------------------------------
-     *  PxTCON: PWM Time Base Control Register
-     *  This register is used for the selection of  the Time Base mode, time base input clock
-     *  prescaler, and time base output postscaler, and for enabling the time base timer.
-     ---------------------------------------------------------------------------------*/
-    //PTEN: PWM Time Base Timer Enable bit
-    //1 = PWM time base is on
-    //0 = PWM time base is off
-    P1TCONbits.PTEN     = 0;
-	
-    //PTSIDL: PWM Time Base Stop in Idle Mode bit
-    //1 = PWM time base halts in CPU Idle mode
-    //0 = PWM time base runs in CPU Idle mode
-    P1TCONbits.PTSIDL   = 0;
-    
-    //PTOPS<3:0>: PWM Time Base Output Postscale Select bits
-    P1TCONbits.PTOPS = 0b00; // postscaler 1:1
-    
-    //PTCKPS<1:0>: PWM Time Base Input Clock Prescale Select bits
-    //11 = PWM time base input clock period is 64 TCY (1:64 prescale)
-    //10 = PWM time base input clock period is 16 TCY (1:16 prescale)
-    //01 = PWM time base input clock period is 4 TCY (1:4 prescale)
-    //00 = PWM time base input clock period is TCY (1:1 prescale)
-	P1TCONbits.PTCKPS = 0b11;   //prescaler 1:64
-    
-    //PTMOD<1:0>: PWM Time Base Mode Select bits
-    //11 = PWM time base operates in Continuous Up/Down Count mode with interrupts for double PWM updates
-    //10 = PWM time base operates in Continuous Up/Down Count mode
-    //01 = PWM time base operates in Single Event mode
-    //00 = PWM time base operates in Free Running mode
-	P1TCONbits.PTMOD=0b00; // PWM time base operates in free running mode
-   
-    P1TMRbits.PTMR = 0;     // PWM counter value, start at 0
-    
-    /*The formula to find the value of PTPER is:
-	 *
-	 *  PTPER = ((Frequence of device[called Fcy])/(PWM frequence * PWM prescaler * 2)) -1
-	 *
-	 * How to find Fcy = Fosc / 4;
-	 *
-	 * How to find PWM frequence : The period of the PWM signal is 20ms, so the frequency is "1 / 20ms"
-	 *
-	 *I use the PWM prescaler set to 1:64
-	 * */
-    P1TPERbits.PTPER =  19999;
-     
-    P1SECMP=0;
+	AD1PCFGL = 0xFFFF;
 
-    PWM1CON1bits.PMOD1 = 1; //the pairs PWM1H e PWM1L are NOT guided in complementary mode so i don't have to use the Dead Time register
-    PWM1CON1bits.PMOD2 = 1; //the pairs PWM2H e PWM2L are NOT guided in complementary mode so i don't have to use the Dead Time register
-    
-    PWM1CON2bits.IUE=1;     // Updates to the active P1DC1 registers are immediate
-    
-    P1DC1=0;
-	P1DC2=0;
-	P1DC3=0;    
-    
-    
+	__builtin_write_OSCCONL(OSCCON & 0xDF); //Clear IO Lock
+
+	//Inputs
+	RPINR18bits.U1RXR  = 0b00001; //RP1  pin22
+	RPINR15bits.INDX1R = 0b10100; //RP20  pin37
+	RPINR14bits.QEA1R  = 0b10011; //RP19  pin36
+	RPINR14bits.QEB1R  = 0b10010; //RP18 pin27
+//DONT NEED. No Data comes back from DAC.	
+//RPINR20bits.SDI1R  = 0b10110; //RP22 pin2
+	RPINR22bits.SDI2R = 0b11000;  //RP24 pin4
+
+	//Outputs
+//	RPOR0bits.RP1R = 0b00111;	//SDO1 pin22
+	RPOR10bits.RP21R = 0b00111;	//SDO1 pin38
+	RPOR3bits.RP7R   = 0b01000;	//SCK1 pin43
+	RPOR0bits.RP0R   = 0b00011;	//U1TX pin21
+	RPOR11bits.RP22R = 0b01011;	//SCK2 pin43 RP7 Dataflash clock line
+	RPOR11bits.RP23R = 0b01010;	//SDO2 pin15 RP15 Dataflash data line
+
+	__builtin_write_OSCCONL(OSCCON | 0x40); //Set IO Lock
 }
 
-void set_pwm_duty_cycle(int pwm, float hightime, float period)
+void initialize_timers()
 {
-	unsigned long value;
+    T2CON = 0x0000;		//Driver Interrupt
+
+    PR2 = 20000;  //PR2 - 10000: freq       = 2.4kHz
+                   //             period     = 400us 
+                   //             tick freq  = 5kHz
+                   //             tick time  = 200us
+
+    IFS0bits.T2IF = 0;
+    IPC1bits.T2IP = 5;
+
+    //IEC0bits.T2IE = 1;
+    //T2CONbits.TON = 1;   
+}
+
+
+//!Initialize SPI1
+void initialize_spi1()
+{
+	/* enable SPI1 interrupt*/
+	IEC0bits.SPI1IE = 1;
 	
-    if( hightime < 0.6 )
-        hightime = 0.6;
-	else if( hightime >2.4 )
-        hightime = 2.4;
-
-	if( period > 20 )
-        period = 20;
-
-	value = 2 * ( 12500 * hightime ) / (period);
-
-	//calculate the value of the register P1DC1 based on a simple proportion hightime:period=P1DC1:PTPER
-	//P1DC1=(P1TPERbits.PTPER*hightime)/(period);
-
-    switch(pwm)
-    {
-        case 1:
-            P1DC1=value;
-            break;
-        case 2:
-            P1DC2=value;
-            break;
-        case 3:
-            P1DC3=value;
-            break;
-	 }
-
+    /* set interrupt priority level */
+	IPC2bits.SPI1IP = 6;
+	
+	//Secondary Prescaler 3:1
+	// Primary Prescaler 1:1
+	// 16 bit operation
+	// sck rising edge triggered active high
+	// ss enabled
+	// uC is master 
+	
+	SPI1CON1 = 0x0477;
+	//SPI1CON1   = 0x047B;
+	/* Not using frame mode */
+	SPI1CON2 = 0x0000;
+	
+	/* Clear Overflow Bit */
+	SPI1STATbits.SPIROV = 0;
+	
+	
+	/* Enable SPI1 */
+	SPI1STATbits.SPIEN = 1;	
+	
+	
+	/* reset SPI1 interrupt flag */
+	IFS0bits.SPI1IF = 0;
+    
+    DACLoad       = 1;
+    DACChipSelect = 1;
 }
 
 void InitApp(void)
 {
     /* TODO Initialize User Ports/Peripherals/Project here */
-    TRISBbits.TRISB10 =  0;		//MODE1_IN2			Output	pin8 	B10
-	TRISBbits.TRISB11 =  0;		//MODE2_IN4			Output  pin9    B11
-	TRISBbits.TRISB12  = 0;     //ENABLE1_IN1     	Output  pin10   B12
-	TRISBbits.TRISB14  = 0;		//ENABLE2_IN3		Output  pin14   B14
+    initialize_periheral_mapping();
     
+    TRISBbits.TRISB10 =  0;		//MODE1_IN2			Output	pin8 	 PWM1H3
+	TRISBbits.TRISB11 =  0;		//MODE2_IN4			Output  pin9     PWM1L3
+	TRISBbits.TRISB12  = 0;     //ENABLE1_IN1     	Output  pin10    PWM1H2
+	TRISBbits.TRISB14  = 0;		//ENABLE2_IN3		Output  pin14    PWM1H1
     
-    initialized_pwm_module();
+    TRISAbits.TRISA10 =  0;		//RS485_CONTROL		Output  pin12   A10
+    
+    TRISAbits.TRISA9  =  0;     //DAC_LOAD  		Output  pin35   A9
+	TRISAbits.TRISA4  =  0;		//DAC_CHIP_SELECT   Output  pin34   A4
+    
+    initialize_timers();
+    
+    initialize_uart();
+   
+    initialize_spi1();
+    
+    //initialize_qei1();
+    
+    initialize_pwm();
+    
     /* Setup analog functionality and port direction */
-    set_pwm_duty_cycle(1,.6, 20);
-    set_pwm_duty_cycle(2,.6, 20);
-    set_pwm_duty_cycle(3,.6, 20);
-    /* Initialize peripherals */
+    current_cli_menu = cMain;
+    axis_command   = kAxisIdle;
+}
 
-    P1DC1 =100;
-	P1DC2 =10000;
-	P1DC3 =20000; 
 
-    P1TCONbits.PTEN=1; //to enable PWM 1 put this bit to 1
+void __attribute__((interrupt, no_auto_psv)) _T2Interrupt( void )
+{
+    encoder_ticks[idx_counter] = encoder_tick++;
+    IFS0bits.T2IF = 0;
 }

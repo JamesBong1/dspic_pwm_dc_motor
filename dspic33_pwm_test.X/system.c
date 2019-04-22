@@ -22,7 +22,7 @@
 /******************************************************************************/
 /* System Level Functions                                                     */
 /*                                                                            */
-/* Custom oscillator configuration funtions, reset source evaluation          */
+/* Custom oscillator configuration functions, reset source evaluation          */
 /* functions, and other non-peripheral microcontroller initialization         */
 /* functions get placed in system.c.                                          */
 /*                                                                            */
