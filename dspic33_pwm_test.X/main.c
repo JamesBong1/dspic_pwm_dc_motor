@@ -75,7 +75,7 @@ int16_t main(void)
     //P1TCONbits.PTEN=1;
     
     DACChipSelect = 0;  //Set Chip Select Low Before Transfer
-    SPI1BUF = ( /*sin_phase*/(0x0ff0/1) | DAC2Mask );
+    SPI1BUF = ( /*sin_phase*/(0x0ff0 - 150 ) | DAC2Mask );
     
     EnableUSBUARTReceive;
     __delay_ms(100);

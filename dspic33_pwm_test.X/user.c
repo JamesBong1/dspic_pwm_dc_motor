@@ -54,13 +54,16 @@ void initialize_timers()
 {
     T2CON = 0x0000;		//Driver Interrupt
 
-    PR2 = 10000;
+    PR2 = 20000;  //PR2 - 10000: freq       = 2.4kHz
+                   //             period     = 400us 
+                   //             tick freq  = 5kHz
+                   //             tick time  = 200us
 
     IFS0bits.T2IF = 0;
     IPC1bits.T2IP = 5;
 
-    IEC0bits.T2IE = 1;
-    T2CONbits.TON = 0;   
+    //IEC0bits.T2IE = 1;
+    //T2CONbits.TON = 1;   
 }
 
 
@@ -121,7 +124,7 @@ void InitApp(void)
    
     initialize_spi1();
     
-    initialize_qei1();
+    //initialize_qei1();
     
     initialize_pwm();
     

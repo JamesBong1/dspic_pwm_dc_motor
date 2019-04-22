@@ -2,13 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/main.c</file>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/h/encoder.h</file>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/h/encoder.c</file>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/h/axis.c</file>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/traps.c</file>
-            <file>file:/C:/Users/sstevens/Documents/gitlab_projects/pwm_dc_motor_control_/dspic33_pwm_test.X/user.c</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>

@@ -122,6 +122,8 @@ void __attribute__((interrupt, no_auto_psv)) _QEI1Interrupt( void )
 		encoder_difference[ idx_counter ] -= 65536;
 	}
     
+    if( encoder_difference[idx_counter] < 0 )
+        encoder_difference[idx_counter] *= -1.0;
 	//Update PreviousCount for next servo cycle
 	PreviousCount = encoder_readings[ idx_counter++ ];
 //    

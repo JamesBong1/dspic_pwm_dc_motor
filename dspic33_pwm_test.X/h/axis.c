@@ -86,11 +86,11 @@ void axis_command_handler()
     {
         case kAxisDecreaseSpeed:
             
-            set_axis_velocity( ( axis.velocity - 0.01 ) );
+            set_axis_velocity( ( axis.velocity - 0.001 ) );
             break;
         case kAxisIncreaseSpeed:
             
-            set_axis_velocity( ( axis.velocity + 0.01 ) );
+            set_axis_velocity( ( axis.velocity + 0.001 ) );
             break;
         case kAxisSetVelocity:
             
@@ -166,7 +166,7 @@ void axis_motion_handler( _axis_command dir )
             //set_pwm_duty_cycle(2, axis.velocity);
             set_pwm_duty_cycle(3, ( 1 - axis.velocity ) );
             
-//            __delay_ms(10);
+            __delay_ms(10);
 // 
 //            P1DC1 = 0x0137;
 //            P1DC3 = 0x0137;

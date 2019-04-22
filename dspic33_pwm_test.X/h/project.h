@@ -33,15 +33,13 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
-#define _Version        "v19.4.15.1"
+#define _Version        "v19.4.22.0"
 /*
- * v19.4.15.1
- * - switch to motor driver #2<IN3,IN4,EN2> of the A4954. this was done since motor 
- *   driver #1<IN1, IN2, EN1> use PEN2H and PEN2H. We can't drive complementary PWM 
- *   signal with two Hs. one of the PWMs must be an L. And, IN3 and IN4, use PEN1H
- *   and PEN3L respectively
- * - ensure PWM driving signals are always complementing each other. and, that 
- *   they are both at 50% duty cycle when the motor is stopped 
+ * v19.4.22.0
+ * - slightly reduce current<DAC2/EN2/Vref34 of a4954>
+ * - test that i am able to read encoder by index pulse interrupts
+ * - screw around with different pwm frequencies/timer2 interrupts
+ * - increment pwm duty cycle by .001 instead of .01 when velocity command is received
  *   TODO:I'll have to figure out how to calculate the time needed to enable a
  *        motor to get to a desired distance.
  */
