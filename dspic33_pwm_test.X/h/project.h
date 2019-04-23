@@ -32,14 +32,12 @@
 #define	PR0JECT_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
+#include <dsp.h>
 
-#define _Version        "v19.4.22.0"
+#define _Version        "v19.4.22.1"
 /*
- * v19.4.22.0
- * - slightly reduce current<DAC2/EN2/Vref34 of a4954>
- * - test that i am able to read encoder by index pulse interrupts
- * - screw around with different pwm frequencies/timer2 interrupts
- * - increment pwm duty cycle by .001 instead of .01 when velocity command is received
+ * v19.4.22.1
+ * - add Microchip's pid methods/dsp library, set up pid variables and compile.
  *   TODO:I'll have to figure out how to calculate the time needed to enable a
  *        motor to get to a desired distance.
  */
@@ -48,6 +46,8 @@
 
 #define _Enable     1
 #define _Disable    0
+
+extern tPID pid;
 
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation

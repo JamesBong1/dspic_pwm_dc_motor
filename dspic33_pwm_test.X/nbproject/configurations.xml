@@ -666,6 +666,10 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
+            <linkerLibFileItem>../../../../../../Program Files (x86)/Microchip/xc16/v1.36/lib/libq-dsp-coff.a</linkerLibFileItem>
+            <linkerLibFileItem>../../../../../../Program Files (x86)/Microchip/xc16/v1.36/lib/libq-dsp-elf.a</linkerLibFileItem>
+            <linkerLibFileItem>../../../../../../Program Files (x86)/Microchip/xc16/v1.36/lib/libdsp-coff.a</linkerLibFileItem>
+            <linkerLibFileItem>../../../../../../Program Files (x86)/Microchip/xc16/v1.36/lib/libdsp-elf.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <archiverTool>
@@ -760,7 +764,8 @@
         <property key="enable-default-isr" value="true"/>
         <property key="enable-handles" value="true"/>
         <property key="enable-pack-data" value="true"/>
-        <property key="extra-lib-directories" value=""/>
+        <property key="extra-lib-directories"
+                  value="..\..\..\..\..\..\Program Files (x86)\Microchip\xc16\v1.36\lib"/>
         <property key="fill-flash-options-addr" value=""/>
         <property key="fill-flash-options-const" value=""/>
         <property key="fill-flash-options-how" value="0"/>
@@ -779,7 +784,7 @@
         <property key="no-ivt" value="false"/>
         <property key="oXC16ld-extra-opts" value=""/>
         <property key="oXC16ld-fill-upper" value="0"/>
-        <property key="oXC16ld-force-link" value="false"/>
+        <property key="oXC16ld-force-link" value="true"/>
         <property key="oXC16ld-no-smart-io" value="false"/>
         <property key="oXC16ld-nostdlib" value="false"/>
         <property key="oXC16ld-stackguard" value="16"/>
@@ -803,7 +808,7 @@
         <property key="legacy-libc" value="true"/>
         <property key="mpreserve-all" value="false"/>
         <property key="oXC16glb-macros" value=""/>
-        <property key="output-file-format" value="elf"/>
+        <property key="output-file-format" value="coff"/>
         <property key="preserve-all" value="false"/>
         <property key="preserve-file" value=""/>
         <property key="relaxed-math" value="false"/>
@@ -844,7 +849,6 @@
         <property key="UART 1" value="true"/>
         <property key="UART 2" value="true"/>
         <property key="debugoptions.useswbreakpoints" value="true"/>
-        <property key="firmware.download.all" value="false"/>
         <property key="hwtoolclock.frcindebug" value="false"/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="false"/>
