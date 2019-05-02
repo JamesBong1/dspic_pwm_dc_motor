@@ -13,7 +13,7 @@
             <asminc-extensions/>
             <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>h</sourceRootElem>
+                <sourceRootElem>.</sourceRootElem>
             </sourceRootList>
             <confList>
                 <confElem>

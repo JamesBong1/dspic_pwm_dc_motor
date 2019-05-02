@@ -34,10 +34,14 @@
 #include <xc.h> // include processor files - each processor file is guarded.  
 #include <dsp.h>
 
-#define _Version        "v19.4.22.1"
+#define _Version        "v19.4.25.0"
 /*
  * v19.4.22.1
- * - add Microchip's pid methods/dsp library, set up pid variables and compile.
+ * - !!!THIS TEST HAS SERIOUS BUGS!!!
+ *   set up closed loop test within timer2 interrupt, that makes where ever the motor
+ *   is on power up the zero position. the test detects whenever the motor has been moved
+ *   out position and attempts to get it back to the zero point, but manipulating the PWM
+ *   signals with the values calculated from Microchip's PID functions in their PID library.
  *   TODO:I'll have to figure out how to calculate the time needed to enable a
  *        motor to get to a desired distance.
  */
@@ -56,9 +60,14 @@ extern tPID pid;
 extern "C" {
 #endif /* __cplusplus */
 
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
+    typedef struct _DriverVariables
+    {
+        int32_t position_nm;
+        volatile int32_t target_position; //!<Theoretical Position include servo interpolation
+        uint8_t motor_polarity;
+    }_driver_vars;
 
+    extern _driver_vars mmc200;
 #ifdef	__cplusplus
 }
 #endif /* __cplusplus */

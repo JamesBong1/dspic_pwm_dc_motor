@@ -18,4 +18,4 @@ typedef struct _AxisVariables
  
 extern _axis_settings axis;
 
-void InitApp(void);    /* I/O and Peripheral Initialization */
+void initialize_app(void);    /* I/O and Peripheral Initialization */

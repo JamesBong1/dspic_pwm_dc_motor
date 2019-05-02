@@ -31,8 +31,27 @@
 #ifndef ENCODER_H
 #define	ENCODER_H
 
-#include <xc.h> // include processor files - each processor file is guarded.  
+#include <xc.h> // include processor files - each processor file is guarded
+#include <stdint.h>
 #include <stdbool.h>
+
+typedef struct EnconderVars
+{
+    uint32_t resolution_nm;
+    
+    //position tracking
+    volatile uint8_t    max_velocity_mm_per_s;  //max velocity of encoder in millimeters/second
+    volatile uint16_t   position_count;
+    volatile uint16_t   previous_position_count;
+    volatile int32_t    change_in_count;
+    int32_t             absolute_position;
+    int32_t             count_accumulation;
+    
+    //uint16_t previous_count;
+    
+}_enconder;
+
+extern _enconder encoder;
 
 extern bool dump_encoder_readings;
 //extern volatile long encoder_readings[100];

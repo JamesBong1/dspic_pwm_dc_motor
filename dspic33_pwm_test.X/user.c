@@ -65,7 +65,7 @@ void initialize_timers()
 {
     T2CON = 0x0000;		//Driver Interrupt
 
-    PR2 = 10000;   //PR2 - 10000: freq         = 2.5kHz
+    PR2 = 0x2710;   //PR2 - 10000: freq         = 2.5kHz
                    //             period       = 400us 
                    //             trigger freq = 5kHz
                    //             tick time    = 200us
@@ -128,7 +128,7 @@ void initialize_pid(void)
     PIDCoeffCalc(&kCoeffs[0], &pid);             // Derives the a,b, & c coefficients from the Kp, Ki & Kd    
 }
 
-void InitApp(void)
+void initialize_app(void)
 {
     /* TODO Initialize User Ports/Peripherals/Project here */
     initialize_periheral_mapping();
@@ -149,23 +149,16 @@ void InitApp(void)
    
     initialize_spi1();
     
-    //initialize_qei1();
+    initialize_qei1();
     
-    //initialize_pwm();
+    initialize_pwm();
     
+    initialize_pid();
     /* Setup analog functionality and port direction */
     current_cli_menu = cMain;
     axis_command   = kAxisIdle;
-}
-
-
-void __attribute__((interrupt, no_auto_psv)) _T2Interrupt( void )
-{
-    //encoder_ticks[idx_counter] = encoder_tick++;
-    if( LATBbits.LATB11 )
-        LATBbits.LATB11 = 0;
-    else
-        LATBbits.LATB11 = 1;
     
-    IFS0bits.T2IF = 0;
+    encoder.resolution_nm = 39;
 }
+
+

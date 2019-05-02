@@ -76,7 +76,7 @@ int16_t main(void)
     ConfigureOscillator();
       
     /* Initialize IO ports and peripherals */
-    InitApp();
+    initialize_app();
     
 //    /* PID CONFIGURATION*/
 //    pid.abcCoefficients = &abcCoefficient[0];   // Set up pointer to derived coefficients
@@ -94,7 +94,7 @@ int16_t main(void)
     //P1TCONbits.PTEN=1;
     
     DACChipSelect = 0;  //Set Chip Select Low Before Transfer
-    SPI1BUF = ( /*sin_phase*/(0x0ff0 - 150 ) | DAC2Mask );
+    SPI1BUF = ( /*sin_phase*/(0xff0 - 150 ) | DAC2Mask );
     
     EnableUSBUARTReceive;
     __delay_ms(100);
