@@ -73,13 +73,13 @@ void uart1_rx_isr( _ring_buffer *rx )
             break;
         case '\b':
 
-            EnableUSBUARTTransmit;
+            //EnableUSBUARTTransmit;
             printf( "\b \b" );
             rxbuffer_clear_byte( rx );
             break;
         default:
 
-            EnableUSBUARTTransmit;
+            //EnableUSBUARTTransmit; 
             printf( "%c" , rxbuffer_peak( rx ) );
             break;
     }

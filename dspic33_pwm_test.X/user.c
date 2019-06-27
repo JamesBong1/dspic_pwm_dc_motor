@@ -13,7 +13,8 @@
     #endif
 #endif
 
-
+#include <dsp.h>
+//#include <libq.h>
 #include "pwm.h"
 #include "uart.h"
 #include "user.h"
@@ -21,7 +22,17 @@
 #include "axis.h"            /* variables/params used by user.c               */
 #include "encoder.h"
 
+tPID pid;
 
+// Declares variables for the derived coefficients and controller history samples
+fractional abcCoefficient[3] __attribute__ ((section (".xbss, bss, xmemory")));
+fractional controlHistory[3] __attribute__ ((section (".ybss, bss, ymemory")));
+
+// The abcCoefficients referenced by the fooPID data structure
+// are derived from the gain coefficients, Kp, Ki and Kd;
+// so, declare Kp, Ki and Kd in an array
+fractional kCoeffs[] = {0,0,0};
+   
 /* <Initialize variables in user.h and insert code for user algorithms.> */
 //!Map Peripheral Inputs and Outputs to Pins
 void initialize_periheral_mapping(void)
@@ -54,16 +65,16 @@ void initialize_timers()
 {
     T2CON = 0x0000;		//Driver Interrupt
 
-    PR2 = 20000;  //PR2 - 10000: freq       = 2.4kHz
-                   //             period     = 400us 
-                   //             tick freq  = 5kHz
-                   //             tick time  = 200us
+    PR2 = 0x2710;   //PR2 - 10000: freq         = 2.5kHz
+                   //             period       = 400us 
+                   //             trigger freq = 5kHz
+                   //             tick time    = 200us
 
     IFS0bits.T2IF = 0;
     IPC1bits.T2IP = 5;
 
-    //IEC0bits.T2IE = 1;
-    //T2CONbits.TON = 1;   
+    IEC0bits.T2IE = 1;
+    //T2CONbits.TON = 1;
 }
 
 
@@ -103,7 +114,21 @@ void initialize_spi1()
     DACChipSelect = 1;
 }
 
-void InitApp(void)
+
+void initialize_pid(void)
+{
+    /* PID CONFIGURATION*/
+    pid.abcCoefficients = &abcCoefficient[0];   // Set up pointer to derived coefficients
+    pid.controlHistory  = &controlHistory[0];   // Set up pointer to controller history samples
+    PIDInit(&pid);                              // Clear controller history and output
+    
+    kCoeffs[0] = Q15(0.70); //Kp
+    kCoeffs[1] = Q15(0.0);  //Ki
+    kCoeffs[2] = Q15(0.10); //Kd
+    PIDCoeffCalc(&kCoeffs[0], &pid);             // Derives the a,b, & c coefficients from the Kp, Ki & Kd    
+}
+
+void initialize_app(void)
 {
     /* TODO Initialize User Ports/Peripherals/Project here */
     initialize_periheral_mapping();
@@ -124,18 +149,16 @@ void InitApp(void)
    
     initialize_spi1();
     
-    //initialize_qei1();
+    initialize_qei1();
     
     initialize_pwm();
     
+    initialize_pid();
     /* Setup analog functionality and port direction */
     current_cli_menu = cMain;
     axis_command   = kAxisIdle;
+    
+    encoder.resolution_nm = 39;
 }
 
 
-void __attribute__((interrupt, no_auto_psv)) _T2Interrupt( void )
-{
-    encoder_ticks[idx_counter] = encoder_tick++;
-    IFS0bits.T2IF = 0;
-}

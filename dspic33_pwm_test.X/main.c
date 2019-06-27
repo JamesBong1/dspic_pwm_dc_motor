@@ -17,6 +17,7 @@
 #include <stdint.h>        /* Includes uint16_t definition                    */
 #include <stdbool.h>       /* Includes true/false definition                  */
 #include <stdio.h>
+
 #include "system.h"        /* System funct/params, like osc/peripheral config */
 #include <libpic30.h>
 #include "user.h"
@@ -26,6 +27,8 @@
 #include "cli.h"
 #include "axis.h"
 #include "encoder.h"
+
+
 
 //update config bits to stop triggering the XC compiler warnings according
 //to the doc, for this chip; file:///C:/Program%20Files%20(x86)/Microchip/xc16/v1.36/docs/config_docs/33FJ128MC804.html
@@ -43,6 +46,8 @@
 
 
 
+
+
 void cli_command_handler( _ring_buffer *rx );
 /******************************************************************************/
 /* Global Variable Declaration                                                */
@@ -53,6 +58,16 @@ void cli_command_handler( _ring_buffer *rx );
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
+//tPID pid;
+//
+//// Declares variables for the derived coefficients and controller history samples
+//fractional abcCoefficient[3] __attribute__ ((section (".xbss, bss, xmemory")));
+//fractional controlHistory[3] __attribute__ ((section (".ybss, bss, ymemory")));
+//
+//// The abcCoefficients referenced by the fooPID data structure
+//// are derived from the gain coefficients, Kp, Ki and Kd;
+//// so, declare Kp, Ki and Kd in an array
+//fractional kCoeffs[] = {0,0,0};
 
 int16_t main(void)
 {
@@ -61,8 +76,12 @@ int16_t main(void)
     ConfigureOscillator();
       
     /* Initialize IO ports and peripherals */
-    InitApp();
+    initialize_app();
     
+//    /* PID CONFIGURATION*/
+//    pid.abcCoefficients = &abcCoefficient[0];   // Set up pointer to derived coefficients
+//    pid.controlHistory  = &controlHistory[0];   // Set up pointer to controller history samples
+//    PIDInit(&pid);                              // Clear controller history and output
     
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
@@ -75,7 +94,7 @@ int16_t main(void)
     //P1TCONbits.PTEN=1;
     
     DACChipSelect = 0;  //Set Chip Select Low Before Transfer
-    SPI1BUF = ( /*sin_phase*/(0x0ff0 - 150 ) | DAC2Mask );
+    SPI1BUF = ( /*sin_phase*/(0xff0 - 150 ) | DAC2Mask );
     
     EnableUSBUARTReceive;
     __delay_ms(100);
@@ -83,6 +102,7 @@ int16_t main(void)
 	IFS0bits.U1RXIF = 0;
 	IEC0bits.U1RXIE = 1;
     
+    T2CONbits.TON = 1;
     
     while(1)
     {

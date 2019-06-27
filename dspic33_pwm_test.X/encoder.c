@@ -38,6 +38,9 @@
  * 
  *  
  */
+_enconder encoder;
+
+
 
 volatile unsigned int EncoderCount = 0;				//!<Value of the POS1CNT register sampled this cycle
 volatile unsigned int PreviousCount = 0;				//!<Value of the POS1CNT register sampled last cycle
@@ -58,14 +61,14 @@ void initialize_qei1()
     QEI1CONbits.QEISIDL = 0;    // Continue module operation in idle mode
     QEI1CONbits.UPDN    = 1;    // Position Counter Direction is positive (+)
     QEI1CONbits.INDX    = 1;    // Read only - Index pin state status pin.
-    QEI1CONbits.QEIM0   = 0;    // Use 4x Update mode with reset on index pulse
+    QEI1CONbits.QEIM0   = 1;    // Use 4x Update mode with reset on index pulse
     QEI1CONbits.QEIM1   = 1;    // "
     QEI1CONbits.QEIM2   = 1;    // "
-    QEI1CONbits.SWPAB   = 1;    // Phase A and Phase B inputs are swapped
+    QEI1CONbits.SWPAB   = 0;    // Phase A and Phase B inputs are swapped
     QEI1CONbits.PCDOUT  = 0;    // Counter Direction Status Output (Normal I/O pin operation)
     QEI1CONbits.POSRES  = 0;    // Index Pulse does not reset Position Counter
     DFLT1CONbits.CEID   = 1;    // Interrupts due to count errors are disabled
-    DFLT1CONbits.QEOUT  = 0;    // Digital filter outputs enabled
+    DFLT1CONbits.QEOUT  = 0;    // Digital filter outputs disabled
     DFLT1CONbits.QECK0  = 0;//1;    // 1:2 clock divide for digital filter for Index
     DFLT1CONbits.QECK1  = 0;    // "
     DFLT1CONbits.QECK2  = 0;    // "
@@ -78,7 +81,8 @@ void initialize_qei1()
     //IFS3bits.QEI1IF = 0;
 
     //Don't enable here. Enable when we know which channel we're looking at.
-    IEC3bits.QEI1IE = 1;	
+    //IEC3bits.QEI1IE = 1;
+    encoder.max_velocity_mm_per_s = 120;	
 }
 
 void dump_encoder_data()

@@ -32,14 +32,16 @@
 #define	PR0JECT_H
 
 #include <xc.h> // include processor files - each processor file is guarded.  
+#include <dsp.h>
 
-#define _Version        "v19.4.22.0"
+#define _Version        "v19.4.25.0"
 /*
- * v19.4.22.0
- * - slightly reduce current<DAC2/EN2/Vref34 of a4954>
- * - test that i am able to read encoder by index pulse interrupts
- * - screw around with different pwm frequencies/timer2 interrupts
- * - increment pwm duty cycle by .001 instead of .01 when velocity command is received
+ * v19.4.22.1
+ * - !!!THIS TEST HAS SERIOUS BUGS!!!
+ *   set up closed loop test within timer2 interrupt, that makes where ever the motor
+ *   is on power up the zero position. the test detects whenever the motor has been moved
+ *   out position and attempts to get it back to the zero point, but manipulating the PWM
+ *   signals with the values calculated from Microchip's PID functions in their PID library.
  *   TODO:I'll have to figure out how to calculate the time needed to enable a
  *        motor to get to a desired distance.
  */
@@ -49,6 +51,8 @@
 #define _Enable     1
 #define _Disable    0
 
+extern tPID pid;
+
 // TODO Insert declarations or function prototypes (right here) to leverage 
 // live documentation
 
@@ -56,9 +60,14 @@
 extern "C" {
 #endif /* __cplusplus */
 
-    // TODO If C++ is being used, regular C code needs function names to have C 
-    // linkage so the functions can be used by the c code. 
+    typedef struct _DriverVariables
+    {
+        int32_t position_nm;
+        volatile int32_t target_position; //!<Theoretical Position include servo interpolation
+        uint8_t motor_polarity;
+    }_driver_vars;
 
+    extern _driver_vars mmc200;
 #ifdef	__cplusplus
 }
 #endif /* __cplusplus */

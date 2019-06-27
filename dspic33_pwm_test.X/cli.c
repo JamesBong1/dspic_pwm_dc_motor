@@ -16,9 +16,10 @@
 #include "pwm.h"
 #include "uart.h"
 #include "axis.h"
+//#include "encoder.h"
 
 bool enter_cli_menu();
-bool print_axis_info();
+bool print_system_info();
 bool print_help();
 
 _cli_menu current_cli_menu;
@@ -33,21 +34,27 @@ const char* cli_menu_title_strs[ cCliMenus ] =
 
 _cli_shell main_cli_menu[] =
 {
-    { "v"   , "v n  - set velocity <n:0-100>"                , NULL               , NULL           },
-    { "p"   , "p n  - set desired position <n: -100 - 100 >" , NULL               , NULL           },
-    { "mc"  , "mc   - manually control position of stage"    , cManualAxisControl , enter_cli_menu },
-    { "info", "info - print current axis settings"           , NULL               , print_axis_info},
-    { "?"   , "?    - help"                                  , NULL               , print_help     },
+    { "v"   , "v n  - set velocity <n:0-100>"               , NULL              , NULL              },
+    { "p"   , "p n  - set position <n=-100-100>"            , NULL              , NULL              },
+    { "mc"  , "mc   - manually control position of stage"   , cManualAxisControl, enter_cli_menu    },
+    { "info", "info - print current axis settings"          , NULL              , print_system_info },
+    { "?"   , "?    - help"                                 , NULL              , print_help        },
     { NULL }
 };
 
-_cli_shell motor_control_menu[] =
+//_cli_shell axis_control_menu[] = 
+//{
+//    { "p", "p<n> - set position <n=-100-100>"   , NULL  , NULL  },
+//    { "?"   , "?    - help"                     , NULL  , print_help        },
+//};
+
+_cli_shell manual_axis_control[] =
 {
     { "A"   , "up arrow   - increase velocity"  , NULL  , NULL          },
     { "B"   , "down arrow - decrease velocity"  , NULL  , NULL          },
     { "C"   , "left arrow - reverse"            , NULL  , NULL          },
     { "D"   , "right arrow- forward"            , NULL  , NULL          },
-    { "s"   , "s - stop pwm"                    , NULL  , NULL          },
+    //{ "s"   , "s - stop pwm"                    , NULL  , NULL          },
     { "x"   , "x - exit menu"                   , cMain , enter_cli_menu},
     { "?"   , ""                                , NULL  , print_help    },
     { NULL }
@@ -56,15 +63,24 @@ _cli_shell motor_control_menu[] =
 _cli_shell *cli_menu_ptr_list[ cCliMenus ] =
 {
 	&main_cli_menu[0] ,
-	&motor_control_menu[0],		
+	&manual_axis_control[0],		
 };
 
-bool print_axis_info()
+//bool print_axis_info()
+//{
+//    printf( "\n\n\raxis info: " );
+//    printf( "\n\raxis.velocity:     %1.3f"      , (double)axis.velocity );
+//    printf( "\n\raxis.acceleration: %ld um/s/s" , axis.accel            );
+//    printf( "\n\raxis.position:     %ld\n\r"    , axis.position         );
+//    return true;
+//}
+
+bool print_system_info()
 {
     printf( "\n\n\raxis info: " );
-    printf( "\n\raxis.velocity:     %1.3f"      , (double)axis.velocity );
-    printf( "\n\raxis.acceleration: %ld um/s/s" , axis.accel            );
-    printf( "\n\raxis.position:     %ld\n\r"    , axis.position         );
+    printf( "\n\raxis.velocity:         %1.3f"      , (double)axis.velocity );
+    //printf( "\n\rmmc200.motor_polarity: %d um/s/s" , mmc200.motor_polarity );
+    printf( "\n\rmmc200.position:       %1.4f mm\n\r"    , ((double)mmc200.position_nm/1000000.0)       );
     return true;
 }
 
