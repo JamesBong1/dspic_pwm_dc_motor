@@ -6,7 +6,17 @@
 
 /* Microcontroller MIPs (FCY) */
 #define SYS_FREQ        7370000L
-#define FCY             SYS_FREQ/2
+#define FCY             50000000UL //SYS_FREQ/2
+
+#define EnableUSBUARTReceive    LATAbits.LATA10 = 0;
+#define EnableUSBUARTTransmit   LATAbits.LATA10 = 1;
+
+#define DAC1Mask 0x1000			//!<Control Byte for DAC to select DAC1
+#define DAC2Mask 0x9000			//!<Control Byte for DAC to select DAC2
+
+#define DACLoad         LATAbits.LATA9      //!<DAC Load Pulse Output
+#define DACChipSelect   LATAbits.LATA4		//!<DAC Chip Select Output
+
 
 /******************************************************************************/
 /* System Function Prototypes                                                 */

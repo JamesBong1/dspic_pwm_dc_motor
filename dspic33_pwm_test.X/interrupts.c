@@ -15,7 +15,7 @@
 
 #include <stdint.h>        /* Includes uint16_t definition   */
 #include <stdbool.h>       /* Includes true/false definition */
-
+#include "system.h"
 /******************************************************************************/
 /* Interrupt Vector Options                                                   */
 /******************************************************************************/
@@ -122,5 +122,29 @@
 /******************************************************************************/
 /* Interrupt Routines                                                         */
 /******************************************************************************/
-
+static int spi_state=0;
 /* TODO Add interrupt routine code here. */
+void __attribute__((interrupt, no_auto_psv)) _SPI1Interrupt( void )
+{
+    static int temp;
+    char delay;
+    //Deselect DAC
+    DACChipSelect = 1;
+
+    //Clear reg
+    temp = SPI1BUF;
+
+    for(delay = 0; delay < 3; delay++);
+
+
+    // Low Pulse to Load the DAC
+    DACLoad = 0;
+
+    for(delay = 0; delay<4; delay++);
+
+    DACLoad = 1;
+    //DAC_TransmitInProgress = 0;
+    spi_state = 0;
+
+    IFS0bits.SPI1IF = 0;
+}
